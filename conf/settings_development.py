@@ -22,7 +22,7 @@ DATABASES = {
         'NAME': 'gzcss',                        # 数据库名 (默认与APP_ID相同)
         'USER': 'root',                        # 你的数据库user
         'PASSWORD': 'oa.oracle',                        # 你的数据库password
-        'HOST': 'localhost',                   # 开发的时候，使用localhost
+        'HOST': '172.16.3.184',                   # 开发的时候，使用localhost
         'PORT': '3306',                        # 默认3306
     },
 }
