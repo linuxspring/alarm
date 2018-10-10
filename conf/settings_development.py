@@ -18,11 +18,18 @@ from settings import APP_ID
 # ===============================================================================
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  # 默认用mysql
-        'NAME': 'gzcss',                        # 数据库名 (默认与APP_ID相同)
-        'USER': 'root',                        # 你的数据库user
-        'PASSWORD': '@86Dj3Y(it',                        # 你的数据库password
-        'HOST': '172.16.3.214',                   # 开发的时候，使用localhost
-        'PORT': '3306',                        # 默认3306
+
+        #'ENGINE': 'django.db.backends.mysql',  # 默认用mysql
+        #'NAME': 'gzcss',                        # 数据库名 (默认与APP_ID相同)
+        #'USER': 'root',                        # 你的数据库user
+        #'PASSWORD': '@86Dj3Y(it',                        # 你的数据库password
+        #'HOST': '172.16.3.214',                   # 开发的时候，使用localhost
+        #'PORT': '3306',                        # 默认3306
+        'ENGINE': 'django.db.backends.oracle',  # 默认用oralce
+        'NAME': 'orcl',                        # 数据库名 (默认与APP_ID相同)
+        'USER': 'portal',                        # 你的数据库user
+        'PASSWORD': 'gzcss',                        # 你的数据库password
+        'HOST': '172.16.3.223',                   # 开发的时候，使用localhost
+        'PORT': '1521',                        # 默认1521
     },
 }
