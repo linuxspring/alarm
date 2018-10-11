@@ -373,3 +373,24 @@ class TCi(models.Model):
     class Meta:
         managed = False
         db_table = 't_ci'
+
+
+class VCiDenameDeparentname(models.Model):
+    id = models.CharField(primary_key=True,  editable=False,max_length=11)
+    ci_code = models.CharField(max_length=150, blank=True, null=True)
+    sys_name = models.CharField(max_length=300, blank=True, null=True)
+    manage_ip = models.CharField(max_length=75, blank=True, null=True)
+    belongname = models.CharField(max_length=4000, blank=True, null=True)
+    device_principal = models.CharField(max_length=600, blank=True, null=True)
+
+    status_id = models.FloatField(blank=True, null=True)
+    name = models.CharField(max_length=300, blank=True, null=True)
+    is_monitor = models.CharField(max_length=3, blank=True, null=True)
+    cis_district_id = models.CharField(max_length=96, blank=True, null=True)
+    level_id = models.CharField(max_length=96, blank=True, null=True)
+    deviceparentname = models.CharField(max_length=50, blank=True, null=True)
+    devicename = models.CharField(max_length=50, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'v_ci_dename_deparentname'
