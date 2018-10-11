@@ -319,7 +319,7 @@ LOGGING = {
         },
         # other loggers...
         'django.db.backends': {
-            'handlers': ['console'],
+            'handlers': ['console'], #wb_mysql
             'level': 'DEBUG',
             'propagate': True,
         },
