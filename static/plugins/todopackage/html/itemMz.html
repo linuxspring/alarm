@@ -1,0 +1,123 @@
+<div style="height: 10px;background: #F1F1F1;"></div>
+<div class="container">
+    <div class="cont1">
+        <div class="row">
+            <div class="tii sjti">基本信息</div>
+            <div class="col-sm-2 col-md-2"></div>
+        </div>
+        <div class="row">
+            <div class="ti">请求项目ID</div>
+            <div class="de" id="id"></div>
+        </div>
+        <div class="row">
+            <div class="ti">项目类别</div>
+            <div class="de" id="type"></div>
+        </div>
+        <div class="row">
+            <div class="ti">项目交付人</div>
+            <div class="de" id="jiaofu"></div>
+        </div>
+        <div class="row">
+            <div class="ti">交付配置项</div>
+            <div class="de" id="peizhi"></div>
+        </div>
+    </div>
+
+    <div class="cont1" id="jjfa">
+        <div class="row">
+            <div class="tii sjti">行项签名</div>
+            <div class="col-sm-2 col-md-2"></div>
+        </div>
+        <div class="row" style="padding-top: 5px">
+            <div class="col-xs-12 col-sm-8 col-md-8 col-sm-offset-2 col-md-offset-2">
+                <div id="signature"
+                     style="background:#DDDDDD;border: 1px solid green;height:3rem;width:100%;margin: 0px">
+
+                </div>
+            </div>
+            <div class="col-sm-offset-2 col-md-offset-2"></div>
+        </div>
+
+    </div>
+
+    <div class="event" id="yyfx" style="margin-bottom: 20px;">
+        <div class="row" style="padding-left: 2px">
+            <div class="text-center" style="margin-top: 10px;">
+                <a id="solve" href="javascript:void(0);" class="btn tag-btn">签名</a>
+                <a id="reset" href="javascript:void(0);" class="btn tag-btn">重置</a>
+                <a id="tohome" href="javascript:void(0);" class="btn tag-btn">返回首页</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .jiahao {
+        font-size: 0.2897rem;
+        position: absolute;
+        right: 0.2rem;
+        margin-top: 0.396rem;
+    }
+</style>
+
+<script>
+    $(function () {
+        $(".header").pin();
+
+
+        //设置bootstrap自动适应布局,ti是字段标题，de是内容，tii是段落标题
+        $('.ti').addClass('col-xs-4 col-sm-3 col-md-2 col-sm-offset-2 col-md-offset-2');
+        $('.de').addClass('col-sm-5 col-xs-8 col-md-6');
+        $('.tii').addClass('col-xs-12 col-sm-8 col-md-8 col-sm-offset-2 col-md-offset-2');
+        $("#jjfs .bot").on('click', function () {
+            var _radio = $(this).find('.event-radio');
+            $("#jjfs .bot .cur").removeClass('cur');
+            _radio.addClass('cur');
+
+            var t = $(this).find('.txt');
+            $("#jjfs .txt.mark-a").removeClass('mark-a');
+            t.addClass('mark-a');
+        });
+
+        $("#jsqk .bot").on('click', function () {
+            var _radio = $(this).find('.event-radio');
+            $("#jsqk .bot .cur").removeClass('cur');
+            _radio.addClass('cur');
+
+            var t = $(this).find('.txt');
+            $("#jsqk .txt.mark-b").removeClass('mark-b');
+            t.addClass('mark-b');
+        });
+
+        $("#jjfa .bot").on('click', function () {
+            var _radio = $(this).find('.event-radio');
+            $("#jjfa .cur").removeClass('cur');
+            _radio.addClass('cur');
+
+            var t = $(this).find('.wz');
+            $("#jjfa .mark-c").removeClass('mark-c');
+            t.addClass('mark-c');
+        });
+    })
+
+
+    function jSignatureTest() {
+        var $sigdiv = $("#signature");
+        var datapair = $sigdiv.jSignature("getData", "image"); //设置输出的格式，具体可以参考官方文档
+        var check = $("#signature").jSignature('getData', 'native').length;
+        if (check > 0) {
+            var i = new Image();
+            i.src = "data:" + datapair[0] + "," + datapair[1];
+            alert(i.src);
+            //$(i).appendTo($("#image")) // append the image (SVG) to DOM.
+            //document.getElementById("sign").value =  i.src;
+            //alert(document.getElementById("surveyForm").action);
+            //document.getElementById("copysign").value = datapair[1];
+            //document.getElementById("surveyForm").submit();
+        } else {
+            alert('请签名');
+        }
+
+    }
+</script>

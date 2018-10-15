@@ -1,0 +1,158 @@
+<div style="height: 10px;background: #F1F1F1;"></div>
+<div class="container">
+    <div class="cont1">
+        <div class="row">
+            <div class="tii sjti">基本信息</div>
+            <div class="col-sm-2 col-md-2"></div>
+        </div>
+        <div class="row">
+            <div class="ti">事件标题</div>
+            <div class="de" id="title"></div>
+        </div>
+        <div class="row">
+            <div class="ti">报告人员</div>
+            <div class="de" id="reporter"></div>
+        </div>
+        <div class="row">
+            <div class="ti">工单编号</div>
+            <div class="de" id="eventNumber"></div>
+        </div>
+    </div>
+    <div class="cont1" id="jjfs">
+        <div class="row">
+            <div class="tii sjti">解决方式</div>
+            <div class="col-sm-2 col-md-2"></div>
+        </div>
+        <div class="row" style="padding-top: 10px">
+            <div class="col-sm-4 col-xs-6 col-md-4 col-sm-offset-2 col-md-offset-2 bot">
+                <span class="event-radio" id="yc"></span>
+                <span class="txt" id="remote">远程解决</span>
+            </div>
+            <div class="col-sm-4 col-xs-6 col-md-6 bot">
+                <span class="event-radio" id="xc"></span>
+                <span class="txt" id="live">现场解决</span>
+            </div>
+            <div class="col-sm-2 col-md-2"></div>
+        </div>
+        <div class="row" style="padding-top: 10px">
+            <div class="col-sm-4 col-xs-6 col-md-4 col-sm-offset-2 col-md-offset-2 bot">
+                <span class="event-radio" id="dh"></span>
+                <span class="txt" id="phone">电话解决</span>
+            </div>
+            <div class="col-sm-4 col-xs-6 col-md-6 bot">
+                <span class="event-radio" id="qt"></span>
+                <span class="txt" id="other">其他解决</span>
+            </div>
+            <div class="col-sm-2 col-md-2"></div>
+        </div>
+    </div>
+    <div class="cont1" id="jsqk">
+        <div class="row">
+            <div class="tii sjti">结束情况</div>
+            <div class="col-sm-2 col-md-2"></div>
+        </div>
+        <div class="row" style="padding-top: 10px">
+            <div class="col-sm-4 col-xs-6 col-md-4 col-sm-offset-2 col-md-offset-2 bot">
+                <span class="event-radio" id="yx"></span>
+                <span class="txt" id="first">一线解决/根本解决</span>
+            </div>
+            <div class="col-sm-4 col-xs-6 col-md-6 bot">
+                <span class="event-radio" id="rx"></span>
+                <span class="txt" id="second">二线解决/根本解决</span>
+            </div>
+            <div class="col-sm-2 col-md-2"></div>
+        </div>
+        <div class="row" style="padding-top: 10px">
+            <div class="col-sm-4 col-xs-6 col-md-4 col-sm-offset-2 col-md-offset-2 bot">
+                <span class="event-radio" id="sx"></span>
+                <span class="txt" id="third">三线解决/根本解决</span>
+            </div>
+        </div>
+    </div>
+    <div class="cont1" id="jjfa">
+        <div class="row">
+            <div class="tii sjti">解决方案</div>
+            <div class="col-sm-2 col-md-2"></div>
+        </div>
+        <div class="row" style="padding-top: 5px">
+            <div class="col-xs-12 col-sm-8 col-md-8 col-sm-offset-2 col-md-offset-2">
+                <textarea class="shuru-tre" rows="4" id="solve" placeholder="请填写解决方案"></textarea>
+            </div>
+            <div class="col-sm-offset-2 col-md-offset-2"></div>
+        </div>
+        <div class="row" style="padding-top: 15px">
+            <div class="col-xs-5 col-sm-3 col-md-3 col-sm-offset-2 col-md-offset-2">是否生成知识库</div>
+            <div class="col-xs-7 col-sm-7 col-md-7">
+                <div class="bot">
+                    <span class="event-radio cur"></span>
+                    <span class="wz mark-c">是</span>
+                </div>
+                <div class="bot">
+                    <span class="event-radio"></span>
+                    <span class="wz">否</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="event" id="yyfx" style="margin-bottom: 20px;">
+        <div class="row" style="padding-left: 2px">
+            <div class="text-center" style="margin-top: 10px;">
+                <a id="detail" href="javascript:void(0);" class="btn tag-btn">详情</a>
+                <a id="save" href="javascript:void(0);" class="btn tag-btn">保存</a>
+                <a id="guaqi" href="javascript:void(0);" class="btn tag-btn">挂起</a>
+                <a id="send" href="javascript:void(0);" class="btn tag-btn">转派</a>
+                <a id="solve" href="javascript:void(0);" class="btn tag-btn">解决</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .jiahao {
+        font-size: 0.2897rem;
+        position: absolute;
+        right: 0.2rem;
+        margin-top: 0.396rem;
+    }
+</style>
+
+<script>
+    $(function () {
+        $(".header").pin();
+
+        //设置bootstrap自动适应布局,ti是字段标题，de是内容，tii是段落标题
+        $('.ti').addClass('col-xs-4 col-sm-3 col-md-2 col-sm-offset-2 col-md-offset-2');
+        $('.de').addClass('col-sm-5 col-xs-8 col-md-6');
+        $('.tii').addClass('col-xs-12 col-sm-8 col-md-8 col-sm-offset-2 col-md-offset-2');
+        $("#jjfs .bot").on('click', function () {
+            var _radio = $(this).find('.event-radio');
+            $("#jjfs .bot .cur").removeClass('cur');
+            _radio.addClass('cur');
+
+            var t = $(this).find('.txt');
+            $("#jjfs .txt.mark-a").removeClass('mark-a');
+            t.addClass('mark-a');
+        });
+
+        $("#jsqk .bot").on('click', function () {
+            var _radio = $(this).find('.event-radio');
+            $("#jsqk .bot .cur").removeClass('cur');
+            _radio.addClass('cur');
+
+            var t = $(this).find('.txt');
+            $("#jsqk .txt.mark-b").removeClass('mark-b');
+            t.addClass('mark-b');
+        });
+
+        $("#jjfa .bot").on('click', function () {
+            var _radio = $(this).find('.event-radio');
+            $("#jjfa .cur").removeClass('cur');
+            _radio.addClass('cur');
+
+            var t = $(this).find('.wz');
+            $("#jjfa .mark-c").removeClass('mark-c');
+            t.addClass('mark-c');
+        });
+    })
+
+</script>

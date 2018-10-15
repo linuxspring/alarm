@@ -1,0 +1,119 @@
+<div class="header">
+    <a href="javascript:void(0);" class="back" id="fanhui"> </a>
+    事件单接受/转派
+</div>
+<div style="height: 10px;background: #F1F1F1;"></div>
+<div class="container">
+    <div class="cont1">
+        <div class="row">
+            <div class="tii sjti">事件信息</div>
+            <div class="col-sm-2 col-md-2"></div>
+        </div>
+        <div class="row">
+            <div class="ti">工单标题</div>
+            <div class="de" id="title"></div>
+        </div>
+        <div class="row">
+            <div class="ti">报告人员</div>
+            <div class="de" id="openedBy"></div>
+        </div>
+        <div class="row">
+            <div class="ti">工单编号</div>
+            <div class="de" id="number"></div>
+        </div>
+        <div class="row">
+            <div class="ti">联系电话</div>
+            <div class="de" id="phone"></div>
+        </div>
+        <div class="row">
+            <div class="ti">报告部门</div>
+            <div class="de" id="dept"></div>
+        </div>
+        <div class="row">
+            <div class="ti">故障发生地</div>
+            <div class="de" id="location"></div>
+        </div>
+        <div class="row">
+            <div class="ti">事件分类</div>
+            <div class="de" id="fenlei"></div>
+        </div>
+        <div class="row">
+            <div class="ti">紧急程度</div>
+            <div class="de" id="enmergency"></div>
+        </div>
+    </div>
+    <div class="cont1">
+        <div class="row">
+            <div class="tii sjti">配置项信息</div>
+            <div class="col-md-2"></div>
+        </div>
+        <div class="row">
+            <div class="ti">配置项名称</div>
+            <div class="de" id="name"></div>
+        </div>
+        <div class="row">
+            <div class="ti">配置项IP</div>
+            <div class="de" id="ip"></div>
+        </div>
+        <div class="row">
+            <div class="ti">配置项位置</div>
+            <div class="de" id="place"></div>
+        </div>
+        <div class="row">
+            <div class="ti">配置项编码</div>
+            <div class="de" id="configNumber"></div>
+        </div>
+        <div class="row">
+            <div class="ti">配置项类别</div>
+            <div class="de" id="kind"></div>
+        </div>
+        <div class="row">
+            <div class="ti">配置项子类</div>
+            <div class="de" id="children"></div>
+        </div>
+        <div class="row">
+            <div class="ti">配置项序列</div>
+            <div class="de" id="xulie"></div>
+        </div>
+        <div class="row">
+            <div class="ti">配置部门</div>
+            <div class="de" id="configDept"></div>
+        </div>
+        <div class="row">
+            <div class="ti">归属部门</div>
+            <div class="de" id="guishuDept"></div>
+        </div>
+        <div class="row">
+            <div class="ti">联系人</div>
+            <div class="de" id="contact"></div>
+        </div>
+    </div>
+    <div class="cont1">
+        <div class="row">
+            <div class="tii sjti">事件详细描述</div>
+            <div class="col-md-2"></div>
+        </div>
+        <div class="row">
+            <div class="tii" id="describe"></div>
+            <div class="col-md-2"></div>
+        </div>
+        <div class="row" style="padding-top: 0.5rem;margin-bottom: 0.72rem;">
+            <div class="text-center">
+                <a href="javascript:void(0);" id="accept" class="btn tag-btn">接受</a>
+                <a href="javascript:void(0);" id="send" class="btn tag-btn">转派</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $(".header").pin();
+
+        //设置bootstrap自动适应布局,ti是字段标题，de是内容，tii是段落标题
+        $('.ti').addClass('col-xs-4 col-sm-3 col-md-2 col-sm-offset-2 col-md-offset-2');
+        $('.de').addClass('col-sm-5 col-xs-8 col-md-6');
+        $('.tii').addClass('col-xs-12 col-sm-10 col-md-8 col-sm-offset-2 col-md-offset-2')
+    });
+</script>
+ 
