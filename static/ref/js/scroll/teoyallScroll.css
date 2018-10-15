@@ -1,0 +1,36 @@
+@charset "utf-8";
+.scroll-wrapper {
+    position: relative;
+}
+
+.scroll-content {
+    position: relative;
+    overflow: hidden;
+    height: auto;
+}
+
+.scroll-bar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8px;
+    background-color: #282828;
+    border-radius: 4px;
+    opacity: .4;
+    filter: alpha(opacity=40);
+}
+
+.scroll-bar:hover {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+.scroll-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    background-color: #515151;
+    border-radius: 4px;
+    cursor: default;
+}

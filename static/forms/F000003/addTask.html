@@ -1,0 +1,105 @@
+<div class="taskItem">
+
+    <div class="row" style="margin-bottom: 15px;">
+        <div class="col-lg-3 col-sm-3 col-xs-3">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" class="importantTask" id="weekpoint">
+                    <span class="text">周重点任务</span>
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-xs-3">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" class="importantTask" id="monthpoint">
+                    <span class="text">月重点任务</span>
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-xs-3">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" class="importantTask" id="deptpoint">
+                    <span class="text">部门重点任务</span>
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-xs-3">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" class="importantTask" id="grouppoint">
+                    <span class="text">班组重点任务</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">任务类型：</label>
+        <div class="col-lg-4">
+            <select class="form-control" id="type">
+                <option value="0">非周期任务</option>
+                <option value="1">周期任务</option>
+            </select>
+            <!--
+                        <input type="text" class="form-control " id="type">
+            -->
+        </div>
+        <label class="col-lg-2 control-label" id="totime">总时间节点：</label>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" id="plan_endtime">
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">任务标题：</label>
+        <div class="col-lg-4">
+            <input type="text" class="form-control " id="name">
+        </div>
+        <label class="col-lg-2 control-label">负责人：</label>
+        <div class="col-lg-4">
+            <input type="hidden" class="form-control " id="ownerid">
+            <input type="text" class="form-control " id="ownername">
+            <!--<select id="ownerid"  class="form-control"></select>-->
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">任务内容：</label>
+        <div class="col-lg-10">
+            <textarea class="form-control" rows="5" style="width: 95%" id="remark" maxlength="166"></textarea>
+        </div>
+    </div>
+
+</div>
+
+<div id="zhouQiTask">
+
+</div>
+
+<div id="feiZhouQiTask">
+    <div class="subTaskItem">
+    </div>
+
+    <div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">
+                <button class="btn btn-info" id="addLine">分解子任务</button>
+            </label>
+        </div>
+    </div>
+</div>
+
+<style>
+    .sub_task {
+        border: 1px solid;
+        border-color: #ddd;
+        padding-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
