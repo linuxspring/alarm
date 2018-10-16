@@ -19,4 +19,5 @@ urlpatterns = patterns(
     (r'^hello/$', 'hello'),
     (r'^ci/list$', 'ciLict'),
     (r'^user/info', 'getUserInfo'),
+    (r'^menu/list', 'menuList'),
 )

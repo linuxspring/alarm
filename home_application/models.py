@@ -394,3 +394,24 @@ class VCiDenameDeparentname(models.Model):
     class Meta:
         managed = False
         db_table = 'v_ci_dename_deparentname'
+
+class TPlanMenu(models.Model):
+    id = models.IntegerField(primary_key=True, editable=False, max_length=11)
+    pid = models.IntegerField(max_length=11, blank=True, null=True)
+
+    type = models.IntegerField(max_length=1, blank=True, null=True)
+    version = models.IntegerField(max_length=11, blank=True, null=True)
+
+    name = models.CharField(max_length=55, blank=True, null=True)
+    link = models.CharField(max_length=500, blank=True, null=True)
+
+    menukey = models.CharField(max_length=55, blank=True, null=True)
+    createtime = models.DateField(blank=True, null=True)
+    tenantid = models.IntegerField(max_length=11, blank=True, null=True)
+    iconcls = models.CharField(max_length=55, blank=True, null=True)
+    sort_index = models.IntegerField(max_length=11, blank=True, null=True)
+
+
+    class Meta:
+        managed = False
+        db_table = 'PLAT_MENU'
