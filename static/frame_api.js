@@ -21,7 +21,7 @@ IWF.sid = null;
         'core/eventbase.js',
         'core/framework.js',
         'core/component.js',
-        'core/ui3.js',
+        'core/ui.js',
         'ref/security/tripledes.js',
         'ref/security/mode-ecb-min.js',
         'ref/validate/validate.js',
@@ -60,6 +60,6 @@ IWF.sid = null;
     ];
 
     for (var i = 0, pi; pi = paths[i++];) {
-        document.write('<script type="text/javascript" src="' + pi + '"></script>');
+        document.write('<script type="text/javascript" src="static/' + pi + '"></script>');
     }
 })();
