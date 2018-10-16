@@ -18,6 +18,7 @@ from django.db import connection, transaction
 from common.mymako import render_mako_context,render_json
 from home_application.models import VCiDenameDeparentname, TCi
 
+
 def home(request):
     """
     首页
@@ -179,6 +180,11 @@ def getUserInfo(request):
 
         loginInfo['userInfo'] = userInfo
         loginInfo['menus'] = []
+        menuInfo['id'] = 23
+        menuInfo['name'] = 'role'
+        menuInfo['menukey'] = 'rolemgr'
+        menuInfo['iconCls'] = 'fa fa-rocket'
+        loginInfo['menus'].append(menuInfo)
 
     json_data = json.dumps(loginInfo, ensure_ascii=False)
     return render_json(loginInfo)
