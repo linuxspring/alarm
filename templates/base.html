@@ -67,76 +67,433 @@
 	    	  var app_id = "${APP_ID}";
 			    var site_url = "${SITE_URL}";	  // app的url前缀,在ajax调用的时候，应该加上该前缀
 			    var static_url = "${STATIC_URL}"; // 静态资源前缀
+              var iwf = {}
 	      </script>
-    </%block>
+      <script type="text/javascript">
+
+          $(document).ready(function (e) {
+
+//			$.ajaxSetup({
+//				timeout: 30000,
+//				cache:false,
+//				crossDomain:true,
+//				xhrFields: {
+//					withCredentials: true
+//				},
+//				error:function (xhr, status, e) {
+//					if(status=='error'){
+//						//window.location.href = "./";
+//					}
+//				},
+//				complete:function (xhr, status) {
+//					//linePro.css('width',  "100%")
+//
+//					var sessionStatus = xhr.getResponseHeader('sessionstatus');
+//					if(sessionStatus == 'timeout'||xhr.status==518) {
+//						var top = getTopWinow();
+//						var yes = confirm('由于您长时间没有操作, session已过期, 请重新登录.');
+//						if (yes) {
+//							top.location.href = './logout';
+//							//document.location.href = "index.html";
+//						}
+//					}
+//				},
+//				beforeSend:function (xhr) {
+//					//xhr.withCredentials = true;
+//					xhr.setRequestHeader("isajax", "isAjax-json");
+//					//xhr.setRequestHeader("isAjax", "isAjax-json");
+//
+//				}
+//			});
+
+
+              /**
+               * 在页面中任何嵌套层次的窗口中获取顶层窗口
+               * @return 当前页面的顶层窗口对象
+               */
+              function getTopWinow() {
+                  var p = window;
+                  while (p != p.parent) {
+                      p = p.parent;
+                  }
+                  return p;
+              }
+
+              var user_obj = {
+                  username: "${request.user.username}",
+                  is_superuser: "${request.user.is_superuser}",
+                  id: "${request.user.id}",
+                  phone: "${request.user.phone}"
+              };
+
+              var url = "${SITE_URL}";
+
+              function queryData(url, ps, callback) {
+                  $.ajax({
+                      url: url,
+                      type: "GET",
+                      dataType: "text",//1:xml 2:html 3:script 4:json 5:jsonp 6:text
+                      contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                      data: ps,
+                      success: function (js) {
+                          callback(js);
+                      },
+                      error: function (x, e) {
+                          alert("调用服务" + url + "失败！");
+                      }
+                  });
+              }
+
+              $.getJSON(url + 'user/getInfo.data', {username: user_obj.username}, function (json) {
+                  //alert(json.user_name);
+
+                  json.userInfo.uRule = [];
+                  var isLoad = false;
+                  $('#welcome').html('<i class="menu-icon fa fa-user" style="margin-right:5px;"></i>' + json.userInfo.fullname);
+                  $('#userinfo_sys').bind('click', function (e) {
+                      var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': 'profile', 'b': 'profile'};
+                      data.params = 0;
+                      var me = window.framework;
+                      me.execCommand('go', data);
+                  });
+
+                  $('#modifypws_sys').bind('click', function (e) {
+                      var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': 'userinfo', 'b': 'userinfo'};
+                      var me = window.framework;
+                      me.execCommand('go', data);
+                  });
+
+                  $('.navbar-brand').html('<span style="color:#23427e;line-height: 40px;margin-left: 80px;">梅州局任务监控平台</span>');
+
+                  json.sid = IWF.sid;
+                  json.token = json.token;
+                  json.rootPath = url;
+                  window.framework = new FrameWork(document, json);
+
+                  //$.getJSON(url+'menu/list.data',{index:1,size:10,json:'中国'},function (json) {
+                  var menus = json.menus;
+                  var tree = $.fn.Tranc({'text': 'name', 'id': 'id', 'pid': 'pid', 'root': -1, 'data': menus});
+
+                  function treeMenu(a) {
+                      this.tree = a || [];
+                      this.groups = {};
+                  };
+                  treeMenu.prototype = {
+                      init: function (pid) {
+                          this.group();
+                          return this.getDom(this.groups[pid]);
+                      },
+                      group: function () {
+                          for (var i = 0; i < this.tree.length; i++) {
+                              if (this.groups[this.tree[i].pId]) {
+                                  this.groups[this.tree[i].pId].push(this.tree[i]);
+                              } else {
+                                  this.groups[this.tree[i].pId] = [];
+                                  this.groups[this.tree[i].pId].push(this.tree[i]);
+                              }
+                          }
+                      },
+                      getDom: function (a) {
+                          if (!a) {
+                              return ''
+                          }
+                          var html = '\n<ul >\n';
+                          for (var i = 0; i < a.length; i++) {
+                              html += '<li><a href="#">' + a[i].name + '</a>';
+                              html += this.getDom(this.groups[a[i].id]);
+                              html += '</li>\n';
+                          }
+                          ;
+                          html += '</ul>\n';
+                          return html;
+                      }
+                  };
+                  //var html=new treeMenu(menus).init(0);
+
+
+                  function getDom(a) {
+                      if (!a) {
+                          return ''
+                      }
+                      a = utils.sort(a, 'sortIndex');
+                      var html = '\n<ul class="submenu">\n';
+                      for (var i = 0; i < a.length; i++) {
+                          var item = a[i];
+                          if (a[i].nodes.length > 0) {
+                              if (a[i].pid == -1) {
+                                  if ($.isEmptyObject(item.iconCls)) item.iconCls = 'fa fa-th';
+                                  html += '<li><a href="javascript:void(0);" class="menu-dropdown"><i class="menu-icon ' + item.iconCls + '"></i><span class="menu-text">' + a[i].name + '</span><i class="menu-expand"></i></a>';
+                              } else {
+                                  html += '<li><a href="javascript:void(0);" key="' + a[i].menukey + '" class="menu-dropdown"><span class="menu-text">' + a[i].name + '</span><i class="menu-expand"></i></a>';
+                              }
+                          } else {
+                              html += '<li><a href="javascript:void(0);" key="' + a[i].menukey + '" ><span class="menu-text">' + a[i].name + '</span></a>';
+
+                          }
+                          html += getDom(a[i].nodes);
+                          html += '</li>\n';
+                      }
+                      ;
+                      html += '</ul>\n';
+                      return html;
+                  }
+
+                  var htmlUl = getDom(tree);
+                  //var liEl=$(htmlUl).children().insertBefore($('#sysmgr_nav'));
+                  var liEl = $(htmlUl).children().appendTo($('.sidebar-menu'));
+                  liEl.find('a').bind('click', function (e) {
+                      var menukey = $(this).attr('key');
+                      if (!utils.isEmptyObject(menukey)) {
+                          var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': menukey, 'b': menukey};
+                          var me = window.framework;
+                          me.execCommand('go', data);
+                      }
+                  });
+              });
+
+
+              $('#LogoutSys').click(function () {
+                  var tpl = '<h4>你确定要退出系统吗?</h4>';
+                  $('body').Dialog({
+                      title: '提示', tpl: tpl, load: function (e) {
+                      }, click: function (e) {
+                          if (e.data.ok) {
+                              $.getJSON(url + 'wechat/sysLogout.data', null, function (json) {
+                                  //json = utils.toJSON(json);
+                                  if (json.success) {
+                                      window.location.href = "./logout";
+                                  }
+                              });
+                          }
+                      }
+                  });
+
+
+              });
+
+              $('#SetMsg').bind('click', function (e) {
+                  var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': 'SetMsg', 'b': 'SetMsg'};
+                  var me = window.framework;
+                  me.execCommand('go', data);
+              });
+              $('#testllx').bind('click', function (e) {
+                  var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': 'view', 'b': 'oracle'};
+                  var me = window.framework;
+                  me.execCommand('go', data);
+              });
+              $('#linkroad').bind('click', function (e) {
+                  var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': 'linkroad', 'b': 'linkroad'};
+                  var me = window.framework;
+                  me.execCommand('go', data);
+              });
+              $('#systemmgr').bind('click', function (e) {
+                  var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': 'systemmgr', 'b': 'systemmgr'};
+                  var me = window.framework;
+                  me.execCommand('go', data);
+              });
+              $('#usermgr').bind('click', function (e) {
+                  var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': 'usermgr', 'b': 'usermgr'};
+                  var me = window.framework;
+                  me.execCommand('go', data);
+              });
+              $('#deptuser').bind('click', function (e) {
+                  var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': 'deptuser', 'b': 'deptuser'};
+                  var me = window.framework;
+                  me.execCommand('go', data);
+              });
+              $('#deptmgr').bind('click', function (e) {
+                  var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': 'deptmgr', 'b': 'deptmgr'};
+                  var me = window.framework;
+                  me.execCommand('go', data);
+              });
+              $('#rulemgr').bind('click', function (e) {
+                  var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': 'rulemgr', 'b': 'rulemgr'};
+                  var me = window.framework;
+                  me.execCommand('go', data);
+              });
+              $('#rolemgr').bind('click', function (e) {
+                  var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': 'rolemgr', 'b': 'rolemgr'};
+                  var me = window.framework;
+                  me.execCommand('go', data);
+              });
+              $('#menumgr').bind('click', function (e) {
+                  var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': 'menumgr', 'b': 'menumgr'};
+                  var me = window.framework;
+                  me.execCommand('go', data);
+              });
+              $('#dictmgr').bind('click', function (e) {
+                  var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': 'dictmgr', 'b': 'dictmgr'};
+                  var me = window.framework;
+                  me.execCommand('go', data);
+              });
+
+              $('#sqlserver').bind('click', function (e) {
+                  var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': 'sqlserver', 'b': 'sqlserver'};
+                  var me = window.framework;
+                  me.execCommand('go', data);
+              });
+              $('#zhong').bind('click', function (e) {
+                  var data = {icon: 'icon-sitemap', color: 'icon-red', 'a': 'zhong', 'b': 'zhong'};
+                  var me = window.framework;
+                  me.execCommand('go', data);
+              });
+
+
+          });
+      </script>
+
+  </%block>
+
   </head>
 
   <body>
-    <!--顶部导航 Start-->
-    <nav class="navbar navbar-default king-horizontal-nav2 navbar-mt0" role="navigation">
-        <div class="container" style="width: 100%;">
-            <div class="navbar-header col-md-4 col-sm-4 col-xs-4 logo">
-                <a class="navbar-brand" href="${SITE_URL}">
-                    蓝鲸智云开发框架
-                </a>
-            </div>
-            <div class="collapse navbar-collapse navbar-responsive-collapse">
-                <ul class="nav navbar-nav">
-                  <%
-                    home = dev_guide = contactus = ''
-                    relative_path = APP_PATH
-                    if relative_path == SITE_URL or relative_path.startswith(SITE_URL + "?"):
-                      home = 'king-navbar-active'
-                    elif relative_path.startswith(SITE_URL + "dev-guide/"):
-                      dev_guide = 'king-navbar-active'
-                    elif relative_path.startswith(SITE_URL + "contactus/"):
-                      contactus = 'king-navbar-active'
-                  %>
-                  <li class="${home}"><a href="${SITE_URL}"><span>首页</span></a></li>
-                  <li class="${dev_guide}"><a href="${SITE_URL}dev-guide/"><span>开发指引</span></a></li>
-                  <li class="${contactus}"><a href="${SITE_URL}contactus/"><span>联系我们</span></a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                  <a href="###" class="avatar">
-                    <img src="${STATIC_URL}img/getheadimg.jpg" width="40" alt="Avatar" class="avatar-img">
-                    % if request.user.is_superuser:
-                        <i class="crown"></i>
-                    % endif
-                    <span>${request.user.username}</span>
-                  </a>
-                  <!--退出登录-->
-                  <a id="logout" href="${LOGOUT_URL}">注销</a>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!--顶部导航 End-->
-    <!-- 固定宽度居中 start -->
-    <%block name='content'></%block>
-    <!-- 固定宽度表单居中 end -->
-    <!-- 尾部声明 start -->
-    <div class="foot" id="footer">
-        <%block name='footerline'></%block>
-        <ul class="links ft">
-            <li>
-                <a id="contact_us" class="link">QQ咨询(800802001)</a>
-                | <a href="http://bbs.bk.tencent.com/forum.php" target="_blank" hotrep="hp.footer.feedback" class="link">蓝鲸论坛</a>
-                | <a href="http://bk.tencent.com/" target="_blank" hotrep="hp.footer.feedback" class="link">蓝鲸官网</a>
-                | <a href="${BK_PLAT_HOST}" target="_blank" hotrep="hp.footer.feedback" class="link">蓝鲸智云工作台</a>
-            </li>
-            <li><p class="copyright">Copyright © 2012-${NOW.year} Tencent BlueKing. All Rights Reserved.</p> </li>
-          <li><p class="copyright">蓝鲸智云 版权所有</p> </li>
-        </ul>
+
+  <div class="loading-container">
+      <div class="loading-progress">
+          <div class="rotator">
+              <div class="rotator">
+                  <div class="rotator colored">
+                      <div class="rotator">
+                          <div class="rotator colored">
+                              <div class="rotator colored"></div>
+                              <div class="rotator"></div>
+                          </div>
+                          <div class="rotator colored"></div>
+                      </div>
+                      <div class="rotator"></div>
+                  </div>
+                  <div class="rotator"></div>
+              </div>
+              <div class="rotator"></div>
+          </div>
+          <div class="rotator"></div>
       </div>
+  </div>
+  <!--  /Loading Container -->
+  <!-- Navbar -->
+  <div class="navbar">
+      <div class="navbar-inner">
+          <div class="navbar-container">
+              <!-- Navbar Barnd -->
+              <div class="navbar-header pull-left">
+
+                  <a href="#" class="navbar-brand">
+                      <small>
+
+                          <img src="" alt=""/>
+
+                      </small>
+                  </a>
+                  <div id="logo-area"></div>
+              </div>
+              <!-- /Navbar Barnd -->
+
+              <!-- Sidebar Collapse -->
+              <div class="sidebar-collapse" id="sidebar-collapse" style="left: 0px;">
+                  <i class="collapse-icon fa fa-bars"></i>
+              </div>
+              <!-- /Sidebar Collapse -->
+              <!-- Account Area and Settings --->
+              <div class="navbar-header pull-right">
+                  <div class="navbar-account">
+                      <ul class="account-area">
+
+                          <li>
+                              <a class="login-area dropdown-toggle" data-toggle="dropdown">
+
+                                  <section>
+                                      <h2><span class="profile"><span id="welcome">David Stevenson</span></span></h2>
+                                  </section>
+                              </a>
+                              <!--Login Area Dropdown-->
+                              <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+                                  <li class="text-align-center"><a href="javascript:void(0);" id="userinfo_sys">个人信息</a>
+                                  </li>
+                                  <li class="text-align-center"><a href="javascript:void(0);"
+                                                                   id="modifypws_sys">修改密码</a></li>
+                                  <!--<li class="email"><a>修改密码</a></li>-->
+                                  <!--<li>-->
+                                  <!--<div class="avatar-area">-->
+                                  <!--<img src="assets/img/avatars/adam-jansen.jpg" class="avatar">-->
+                                  <!--<span class="caption">Change Photo</span>-->
+                                  <!--</div>-->
+                                  <!--</li>-->
+                                  <!--<li class="edit">-->
+                                  <!--<a href="profile.html" class="pull-left">Profile</a>-->
+                                  <!--<a href="#" class="pull-right">Setting</a>-->
+                                  <!--</li>-->
+                                  <!--<li class="theme-area">-->
+                                  <!--<ul class="colorpicker" id="skin-changer">-->
+                                  <!--<li><a class="colorpick-btn" href="#" style="background-color:#5DB2FF;" rel="assets/css/skins/blue.min.css"></a></li>-->
+                                  <!--<li><a class="colorpick-btn" href="#" style="background-color:#2dc3e8;" rel="assets/css/skins/azure.min.css"></a></li>-->
+                                  <!--<li><a class="colorpick-btn" href="#" style="background-color:#03B3B2;" rel="assets/css/skins/teal.min.css"></a></li>-->
+                                  <!--<li><a class="colorpick-btn" href="#" style="background-color:#53a93f;" rel="assets/css/skins/green.min.css"></a></li>-->
+                                  <!--<li><a class="colorpick-btn" href="#" style="background-color:#FF8F32;" rel="assets/css/skins/orange.min.css"></a></li>-->
+                                  <!--<li><a class="colorpick-btn" href="#" style="background-color:#cc324b;" rel="assets/css/skins/pink.min.css"></a></li>-->
+                                  <!--<li><a class="colorpick-btn" href="#" style="background-color:#AC193D;" rel="assets/css/skins/darkred.min.css"></a></li>-->
+                                  <!--<li><a class="colorpick-btn" href="#" style="background-color:#8C0095;" rel="assets/css/skins/purple.min.css"></a></li>-->
+                                  <!--<li><a class="colorpick-btn" href="#" style="background-color:#0072C6;" rel="assets/css/skins/darkblue.min.css"></a></li>-->
+                                  <!--<li><a class="colorpick-btn" href="#" style="background-color:#585858;" rel="assets/css/skins/gray.min.css"></a></li>-->
+                                  <!--<li><a class="colorpick-btn" href="#" style="background-color:#474544;" rel="assets/css/skins/black.min.css"></a></li>-->
+                                  <!--<li><a class="colorpick-btn" href="#" style="background-color:#001940;" rel="assets/css/skins/deepblue.min.css"></a></li>-->
+                                  <!--</ul>-->
+                                  <!--</li>-->
+                                  <!--<li class="dropdown-footer">-->
+                                  <!--<a href="javascript:void(0);" id="LogoutSys">-->
+                                  <!--注销-->
+                                  <!--</a>-->
+                                  <!--</li>-->
+                              </ul>
+                              <!--/Login Area Dropdown-->
+                          </li>
+                          <li>
+                              <a href="javascript:void(0);" style="line-height: 40px;color:white;text-align: center;"
+                                 id="LogoutSys">
+                                  <i class="menu-icon fa fa-sign-out" style="margin-right: 5px;"></i>注销
+                              </a>
+                          </li>
+                          <!-- Settings -->
+                      </ul>
+                      <!--<div class="setting">-->
+                      <!--<a id="btn-setting" title="Setting" href="#">-->
+                      <!--<i class="icon glyphicon glyphicon-cog"></i>-->
+                      <!--</a>-->
+                      <!--</div>-->
+                      <div class="setting-container">
+                          <label>
+                              <input type="checkbox" id="checkbox_fixednavbar">
+                              <span class="text">Fixed Navbar</span>
+                          </label>
+                          <label>
+                              <input type="checkbox" id="checkbox_fixedsidebar">
+                              <span class="text">Fixed SideBar</span>
+                          </label>
+                          <label>
+                              <input type="checkbox" id="checkbox_fixedbreadcrumbs">
+                              <span class="text">Fixed BreadCrumbs</span>
+                          </label>
+                          <label>
+                              <input type="checkbox" id="checkbox_fixedheader">
+                              <span class="text">Fixed Header</span>
+                          </label>
+                      </div>
+                      <!-- Settings -->
+                  </div>
+              </div>
+              <!-- /Account Area and Settings -->
+
+          </div>
+      </div>
+  </div>
+  <!-- /Navbar -->
+  <!-- Main Container -->
+
+
+
       <!-- 尾部声明 start -->
     <!-- jquery js  -->
-    <script src="${STATIC_URL}js/jquery-1.10.2.min.js" type="text/javascript"></script>
-    <script src="${STATIC_URL}js/jquery.json-2.3.min.js" type="text/javascript"></script>
-    <!-- bootstrap js  -->
-    <script src="${STATIC_URL}assets/bootstrap-3.3.4/js/bootstrap.min.js" type="text/javascript"></script>
-    <!--配置js  勿删-->
-    <script src="${STATIC_URL}js/settings.js?v=${STATIC_VERSION}" type="text/javascript"></script>
-    ${self.body()}
+
+  ${self.body()}
     <!-- 兼容性设置 -->
     <!--[if lt IE 6]>\xe8\x93\x9d\xe9\xb2\xb8\xe6\x99\xba\xe8\x90\xa5\x20\xe7\x89\x88\xe6\x9d\x83\xe6\x89\x80\xe6\x9c\x89<![endif]-->
   </body>

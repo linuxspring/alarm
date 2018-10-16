@@ -1,25 +1,331 @@
 <%inherit file="/base.html"/>
 
-<%block name="content">
-    <div class="home-page">
-    	<div class="page-arrow">
-			<div class="container">
-				<!-- 蓝鲸智云开发框架说明  Start -->
-				<div class="tc title-word">
-					<p>欢迎使用蓝鲸智云集成平台</p>
-				</div>
-				<div class="tc title-word-second">
-					<p>蓝鲸智云开发框架<small class="pl10">助力你的自动化56</small></p>
-				</div>
-				<hr class="cutting-line">
-				<div class="tc frame-explain-text">
-					<p>您现在打开的应用是由蓝鲸智云示例代码生成的，该示例代码称为“APP开发框架”。</p>
-					<p>蓝鲸智云集成平台（PaaS）提供了完善的前后台开发框架、调度引擎、公共组件等模块，帮助业务的产品和技术人员快速构建低成本、免运维的支撑工具和运营系统。</p>
-					<p>若想体验快速开发应用的功能，请前往<a class="developer-center" href="${BK_PAAS_HOST}" target="_blank">“开发者中心”</a>。</p>
-				</div>
-				<!-- 蓝鲸智云开发框架说明  End -->
-			</div>
-		</div>
-    </div>
-</%block>
 
+<%block name="content">
+<div class="main-container container-fluid">
+    <!-- Page Container -->
+    <div class="page-container">
+        <!-- Page Sidebar -->
+        <div class="page-sidebar" id="sidebar">
+            <!-- Page Sidebar Header-->
+            <!--<div class="sidebar-header-wrapper">-->
+            <!--<input type="text" class="searchinput" />-->
+            <!--<i class="searchicon fa fa-search"></i>-->
+            <!--<div class="searchhelper">Search Reports, Charts, Emails or Notifications</div>-->
+            <!--</div>-->
+            <!-- /Page Sidebar Header -->
+            <!-- Sidebar Menu -->
+            <ul class="nav sidebar-menu">
+                <!--Dashboard-->
+                <li class="active">
+                    <a href="./main.html#todotask.todotask">
+                        <i class="menu-icon glyphicon glyphicon-home"></i>
+                        <span class="menu-text">在线待办业务</span>
+                    </a>
+                </li>
+                <!--Databoxes-->
+                <!--<li>-->
+                <!--<a href="javascript:void(0);" id="testllx">-->
+                <!--<i class="menu-icon glyphicon glyphicon-tasks"></i>-->
+                <!--<span class="menu-text">wyz test</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li id="itsm_nav">-->
+                <!--<a href="#" class="menu-dropdown">-->
+                <!--<i class="menu-icon fa fa-desktop"></i>-->
+                <!--<span class="menu-text">ITSM导航</span>-->
+                <!--<i class="menu-expand"></i>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--Widgets-->
+                <!--<li id="sysmgr_nav">-->
+                <!--<a href="javascript:void(0);" class="menu-dropdown">-->
+                <!--<i class="menu-icon fa fa-th"></i>-->
+                <!--<span class="menu-text">系统管理</span>-->
+                <!--<i class="menu-expand"></i>-->
+                <!--</a>-->
+                <!--<ul class="submenu">-->
+                <!--<li>-->
+                <!--<a href="javascript:void(0);" id="usermgr">-->
+                <!--<span class="menu-text">用户管理</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="javascript:void(0);" id="deptmgr">-->
+                <!--<span class="menu-text">组织机构</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="javascript:void(0);" id="deptuser">-->
+                <!--<span class="menu-text">部门用户</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="javascript:void(0);" id="rolemgr">-->
+                <!--<span class="menu-text">角色管理</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="javascript:void(0);" id="rulemgr">-->
+                <!--<span class="menu-text">权限管理</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="javascript:void(0);" id="menumgr">-->
+                <!--<span class="menu-text">菜单管理</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="javascript:void(0);" id="dictmgr">-->
+                <!--<span class="menu-text">字典管理</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<a href="javascript:void(0);" id="systemmgr">&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="menu-text">系统设置</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="#" class="menu-dropdown">-->
+                <!--<i class="menu-icon fa fa-desktop"></i>-->
+                <!--<span class="menu-text">大屏展示</span>-->
+                <!--<i class="menu-expand"></i>-->
+                <!--</a>-->
+
+                <!--<ul class="submenu">-->
+                <!--<li>-->
+                <!--<a href="elements.html">-->
+                <!--<span class="menu-text">Weblogic视图</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="#" class="menu-dropdown">-->
+                <!--<span class="menu-text">性能总览视图</span>-->
+                <!--<i class="menu-expand"></i>-->
+                <!--</a>-->
+
+                <!--<ul class="submenu">-->
+                <!--<li>-->
+                <!--<a href="font-awesome.html">-->
+                <!--<i class="menu-icon fa fa-rocket"></i>-->
+                <!--<span class="menu-text">Font Awesome</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="glyph-icons.html">-->
+                <!--<i class="menu-icon glyphicon glyphicon-stats"></i>-->
+                <!--<span class="menu-text">Glyph Icons</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="typicon.html">-->
+                <!--<i class="menu-icon typcn typcn-location-outline"></i>-->
+                <!--<span class="menu-text"> Typicons</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="weather-icons.html">-->
+                <!--<i class="menu-icon wi-day-snow"></i>-->
+                <!--<span class="menu-text">Weather Icons</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="tabs.html">-->
+                <!--<span class="menu-text">Tomcat视图</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="alerts.html">-->
+                <!--<span class="menu-text">Mysql视图</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="javascript:void(0);" id="sqlserver">-->
+                <!--<span class="menu-text">Sql Server视图</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="buttons.html">-->
+                <!--<span class="menu-text">达梦视图</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="javascript:void(0);" id="zhong">-->
+                <!--<span class="menu-text">中创视图</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="treeview.html">-->
+                <!--<span class="menu-text">主机视图</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</li>-->
+                <!--&lt;!&ndash;Tables&ndash;&gt;-->
+                <!--<li>-->
+                <!--<a href="#" class="menu-dropdown">-->
+                <!--<i class="menu-icon fa fa-table"></i>-->
+                <!--<span class="menu-text"> 个性设置 </span>-->
+
+                <!--<i class="menu-expand"></i>-->
+                <!--</a>-->
+
+                <!--<ul class="submenu">-->
+                <!--<li>-->
+                <!--<a href="tables-simple.html">-->
+                <!--<span class="menu-text">报表系统</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="tables-data.html">-->
+                <!--<span class="menu-text">待办事宜</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="tables-data.html">-->
+                <!--<span class="menu-text">更改密码</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="tables-data.html">-->
+                <!--<span class="menu-text">联系人信息</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="tables-data.html">-->
+                <!--<span class="menu-text">我的状态</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="tables-data.html">-->
+                <!--<span class="menu-text">我发送的短信</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="tables-data.html">-->
+                <!--<span class="menu-text">系统公告</span>-->
+                <!--</a>-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</li>-->
+                <!--Forms-->
+
+
+            </ul>
+            <!-- /Sidebar Menu -->
+        </div>
+        <!-- /Page Sidebar -->
+        <!-- Page Content -->
+        <div class="page-content">
+            <div>
+                <div></div>
+                <ul id="maintab" class="nav nav-tabs maintab">
+                </ul>
+                <div></div>
+                <div></div>
+            </div>
+            <!-- Page Body
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="databox radius-bordered databox-shadowed databox-graded">
+                                    <div class="databox-left bg-themesecondary">
+                                        <div class="databox-piechart">
+                                            <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="50" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span class="white font-90">50%</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="databox-right">
+                                        <span class="databox-number themesecondary">14</span>
+                                        <div class="databox-text darkgray">NEW TASKS</div>
+                                        <div class="databox-stat themesecondary radius-bordered">
+                                            <i class="stat-icon icon-lg fa fa-tasks"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="databox radius-bordered databox-shadowed databox-graded">
+                                    <div class="databox-left bg-themethirdcolor">
+                                        <div class="databox-piechart">
+                                            <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="15" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="rgba(255,255,255,0.2)"><span class="white font-90">15%</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="databox-right">
+                                        <span class="databox-number themethirdcolor">1</span>
+                                        <div class="databox-text darkgray">NEW MESSAGE</div>
+                                        <div class="databox-stat themethirdcolor radius-bordered">
+                                            <i class="stat-icon  icon-lg fa fa-envelope-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="databox radius-bordered databox-shadowed databox-graded">
+                                    <div class="databox-left bg-themeprimary">
+                                        <div class="databox-piechart">
+                                            <div id="users-pie" data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="76" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span class="white font-90">76%</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="databox-right">
+                                        <span class="databox-number themeprimary">98</span>
+                                        <div class="databox-text darkgray">NEW USERS</div>
+                                        <div class="databox-state bg-themeprimary">
+                                            <i class="fa fa-check"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="databox radius-bordered databox-shadowed databox-graded">
+                                    <div class="databox-left no-padding bordered-left-2 bordered-palegreen">
+                                        <img src="assets/img/avatars/John-Smith.jpg" style="width:65px; height:65px;">
+                                    </div>
+                                    <div class="databox-right padding-top-20">
+                                        <div class="databox-stat palegreen">
+                                            <i class="stat-icon icon-xlg fa fa-phone"></i>
+                                        </div>
+                                        <div class="databox-text darkgray">JOHN SMITH</div>
+                                        <div class="databox-text darkgray">TOP RESELLER</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>-->
+            <div id="maincontent" class="tab-content" style="padding:0px;"></div>
+            <!-- /Page Body -->
+        </div>
+
+        <!-- /Page Content -->
+    </div>
+    <!-- /Page Container -->
+    <!-- Main Container -->
+    <div id="iwf-alert"></div>
+</div>
+
+
+<!--Beyond Scripts-->
+<script src="${STATIC_URL}assets/js/beyond.min.js"></script>
+
+
+<script src="${STATIC_URL}assets/js/datatable/jquery.dataTables.min.js"></script>
+<script src="${STATIC_URL}assets/js/datatable/ZeroClipboard.js"></script>
+<script src="${STATIC_URL}assets/js/datatable/dataTables.tableTools.min.js"></script>
+<script src="${STATIC_URL}assets/js/datatable/dataTables.bootstrap.min.js"></script>
+<script src="${STATIC_URL}assets/js/datatable/datatables-init.js"></script>
+<script>
+    InitiateSimpleDataTable.init();
+    //InitiateEditableDataTable.init();
+    //InitiateExpandableDataTable.init();
+    InitiateSearchableDataTable.init();
+</script>
+
+</%block>
