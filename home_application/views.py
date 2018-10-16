@@ -8,17 +8,15 @@ Unless required by applicable law or agreed to in writing, software distributed 
 an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 """
-import json
-
 import datetime
-
+import json
 from django.contrib.auth.models import Group
 from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db import connection, transaction
 
 from common.mymako import render_mako_context,render_json
 from home_application.models import VCiDenameDeparentname, TCi
-from django.db import connection, transaction
 
 def home(request):
     """
@@ -164,6 +162,8 @@ def ciDel(request):
 
 def getUserInfo(request):
     userInfo={}
+    loginInfo = {}
+    menuInfo = {}
 
     if request.user.is_authenticated():
         user = request.user
@@ -175,13 +175,10 @@ def getUserInfo(request):
         userInfo['qq'] = user.qq
         userInfo['id'] = user.id
         userInfo['email'] = user.email
+        userInfo['fullname'] = 'administrator'
 
+        loginInfo['userInfo'] = userInfo
+        loginInfo['menus'] = []
 
-    json_data = json.dumps(userInfo, ensure_ascii=False)
-    return  render_json(userInfo)
-
-
-
-
-
-
+    json_data = json.dumps(loginInfo, ensure_ascii=False)
+    return render_json(loginInfo)

@@ -18,5 +18,5 @@ urlpatterns = patterns(
     (r'^contactus/$', 'contactus'),
     (r'^hello/$', 'hello'),
     (r'^ci/list$', 'ciLict'),
-    (r'^user/info', 'getUserInfo'),
+    (r'^user/getInfo.data', 'getUserInfo'),
 )
