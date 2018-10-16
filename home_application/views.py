@@ -163,16 +163,22 @@ def ciDel(request):
 
 
 def getUserInfo(request):
-    current_user_set=""
+    userInfo={}
 
     if request.user.is_authenticated():
-        current_user_set = request.user
+        user = request.user
         # print current_user_set
         # current_group_set = Group.objects.get(user=current_user_set)
         # print current_group_set
         # print current_user_set.get_group_permissions()
-        json_data = json.dumps(current_user_set, ensure_ascii=False)
-    return  render_json(json_data)
+        userInfo['username'] = user.username
+        userInfo['qq'] = user.qq
+        userInfo['id'] = user.id
+        userInfo['email'] = user.email
+
+
+    json_data = json.dumps(userInfo, ensure_ascii=False)
+    return  render_json(userInfo)
 
 
 
