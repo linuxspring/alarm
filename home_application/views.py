@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 """
 Tencent is pleased to support the open source community by making 蓝鲸智云(BlueKing) available.
 Copyright (C) 2017 THL A29 Limited, a Tencent company. All rights reserved.
@@ -8,16 +8,17 @@ Unless required by applicable law or agreed to in writing, software distributed 
 an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 """
-import datetime
 import json
+
+import datetime
+
 from django.contrib.auth.models import Group
 from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.db import connection, transaction
 
 from common.mymako import render_mako_context,render_json
-from home_application.models import VCiDenameDeparentname, TCi
-
+from home_application.models import VCiDenameDeparentname, TCi, TPlanMenu
+from django.db import connection, transaction
 
 def home(request):
     """
@@ -114,10 +115,9 @@ def ciLict(request):
     #json_data = serializers.serialize("json", a, ensure_ascii=False)  # 只有数据没页码
     result = {'page':page,'size':size,'rows':json.loads(json_data)}
 
-    # result1=executeQuery("select ROWNUM RN,vci.*,vci.deviceparentname||'/'||vci.devicename parent_child_name from v_ci_dename_deparentname vci where 1=1")
-    # bb= serializers.serialize("json", result1, ensure_ascii=False)
-    #
-    # print(bb)
+    result1=executeQuery("select ROWNUM RN,vci.*,vci.deviceparentname||'/'||vci.devicename parent_child_name from v_ci_dename_deparentname vci where 1=1")
+    json_data11 = json.dumps(result1, ensure_ascii=False, encoding='UTF-8')    #
+    print(json_data11)
 
     return render_json(result)
 
@@ -134,8 +134,13 @@ def executeQuery(sql):
             objDict = {}
             # 把每一行的数据遍历出来放到Dict中
             for index, value in enumerate(row):
-                print index, col_names[index], value
-                objDict[col_names[index]] = value
+                #print index, col_names[index], value
+                if isinstance(value, datetime.datetime):
+                    objDict[col_names[index]] = value.strftime('%Y-%m-%d %H:%M:%S')
+                elif isinstance(value, datetime.date):
+                    objDict[col_names[index]] = value.strftime("%Y-%m-%d")
+                else:
+                    objDict[col_names[index]] = value
 
             result.append(objDict)
 
@@ -143,14 +148,14 @@ def executeQuery(sql):
 
 
 
-class DateEncoder(json.JSONEncoder):
-    def default(self,obj):
-        if isinstance(obj, datetime.datetime):
-            return obj.strftime('%Y-%m-%d %H:%M:%S')
-        elif isinstance(obj,datetime.date):
-            return obj.strftime("%Y-%m-%d")
-        else:
-            return json.JSONEncoder.default(self, obj)
+# class DateEncoder(json.JSONEncoder):
+#     def default(self,obj):
+#         if isinstance(obj, datetime.datetime):
+#             return obj.strftime('%Y-%m-%d %H:%M:%S')
+#         elif isinstance(obj,datetime.date):
+#             return obj.strftime("%Y-%m-%d")
+#         else:
+#             return json.JSONEncoder.default(self, obj)
 
 
 
@@ -163,8 +168,6 @@ def ciDel(request):
 
 def getUserInfo(request):
     userInfo={}
-    loginInfo = {}
-    menuInfo = {}
 
     if request.user.is_authenticated():
         user = request.user
@@ -186,5 +189,21 @@ def getUserInfo(request):
         menuInfo['iconCls'] = 'fa fa-rocket'
         loginInfo['menus'].append(menuInfo)
 
-    json_data = json.dumps(loginInfo, ensure_ascii=False)
-    return render_json(loginInfo)
+    json_data = json.dumps(userInfo, ensure_ascii=False)
+    return  render_json(userInfo)
+
+def menuList(request):
+
+    menu = TPlanMenu.objects.all()
+    json_data = serializers.serialize("json", menu, ensure_ascii=False,encoding='UTF-8')  # 只有数据没页码
+
+    result = {'success': True, 'rows': json.loads(json_data)}
+    return render_json(result)
+
+
+
+
+
+
+
+
