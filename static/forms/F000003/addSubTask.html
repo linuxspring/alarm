@@ -1,0 +1,91 @@
+<input type="file" name="import" accept="application/vnd.ms-excel"/>
+<!-- onchange="importf(this)" -->
+<div id="demo"></div>
+<div class="sub_task">
+    <button type="button" class="close" aria-hidden="true">&times;</button>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">负责人：</label>
+        <div class="col-lg-4">
+
+            <!-- <select  class="form-control ownerid"></select>-->
+            <input type="hidden" class="form-control ownerid">
+            <input type="text" class="form-control ownername">
+        </div>
+        <label class="col-lg-2 control-label plan_endtime_text">完成时间：</label>
+        <div class="col-lg-4">
+            <input type="text" class="form-control plan_endtime">
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">占比：</label>
+        <div class="col-lg-4">
+            <input type="text" class="form-control rate">
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">子任务内容：</label>
+        <div class="col-lg-10">
+            <textarea class="form-control comments" rows="5" style="width: 95%" maxlength="166"></textarea>
+        </div>
+    </div>
+</div>
+
+<div class="sub_task">
+    <button type="button" class="close" aria-hidden="true">&times;</button>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">负责人：</label>
+        <div class="col-lg-4">
+            <!-- <select  class="form-control ownerid"></select>-->
+            <input type="hidden" class="form-control ownerid">
+            <input type="text" class="form-control ownername">
+        </div>
+        <label class="col-lg-2 control-label  plan_endtime_text">完成时间：</label>
+        <div class="col-lg-4">
+            <input type="text" class="form-control plan_endtime">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">占比：</label>
+        <div class="col-lg-4">
+            <input type="text" class="form-control rate">
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">子任务内容：</label>
+        <div class="col-lg-10">
+            <textarea class="form-control comments" rows="5" style="width: 95%" maxlength="166"></textarea>
+        </div>
+    </div>
+</div>
+
+<div class="otherItem" style="text-align: center">
+    <button class="btn-primary" id="addLine">增加一行</button>
+</div>
+
+<style>
+    .sub_task {
+        border: 1px solid;
+        border-color: #ddd;
+        padding-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+<script>
+    /*
+     FileReader共有4种读取方法：
+     1.readAsArrayBuffer(file)：将文件读取为ArrayBuffer。
+     2.readAsBinaryString(file)：将文件读取为二进制字符串
+     3.readAsDataURL(file)：将文件读取为Data URL
+     4.readAsText(file, [encoding])：将文件读取为文本，encoding缺省值为'UTF-8'
+     */
+
+</script>

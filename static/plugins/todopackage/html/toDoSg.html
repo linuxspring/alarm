@@ -1,0 +1,45 @@
+<div style="height: 10px;"></div>
+<div class="container">
+    <div class="loading">
+    </div>
+    <div class="scroll">
+        <div class="todo-container tabsTop">
+            <div class="todo-center">
+                <a class="todo-row" href="javascript:void(0);" id="qingqiu">
+                    <span class="todo-pic todo-pic2"></span>
+                    <span class="todo-jt"></span>
+                    <div class="todo-lm">请求列表</div>
+                    <div class="todo-desc">目前共<span id="request">0</span>条记录</div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .hideTabs {
+        display: none;
+    }
+
+    .tabsTop {
+        padding-top: 10px;
+    }
+
+    a:hover {
+        color: white;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $(".header").pin();
+
+        $('.tabs a').click(function () {
+            var i = $(this).index();
+            $(this).addClass('cur').siblings().removeClass('cur');
+            $('.tabs').find('span').remove();
+            $(this).append('<span class="tiao"></span>');
+            $('#con li').eq(i).show().siblings().hide();
+        });
+    });
+</script>

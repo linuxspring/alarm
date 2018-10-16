@@ -1,0 +1,92 @@
+<script type="text/javascript" src="ref/plupload/plupload.full.min.js"></script>
+<body style="font: 13px Verdana; background: #eee; color: #333">
+<div id="container">
+    <!-- 
+    <a id="pickfiles" href="javascript:;">[Select files]</a> 
+    <a id="uploadfiles" href="javascript:;">[Upload files]</a>
+      -->
+    <div class="form-group">
+        <div id="filelist" class="col-lg-12"></div>
+
+
+        <div class="col-lg-12">
+            <button class="btn btn-info" id="pickfiles">选择上传文件</button>
+            <button class="btn btn-info" id="uploadfiles">导入</button>
+            <pre id="console" style="margin-top:10px;height:150px"></pre>
+        </div>
+
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    var uploader = new plupload.Uploader({
+        runtimes: 'html5,flash,silverlight,html4',
+        browse_button: 'pickfiles', // you can pass an id...
+        container: document.getElementById('container'), // ... or DOM Element itself
+        url: 'http://' + window.location.host + '/TaskService/task/importTask.data',
+        flash_swf_url: '../js/Moxie.swf',
+        silverlight_xap_url: '../js/Moxie.xap',
+        file_data_name: "files",
+        filters: {
+            max_file_size: '10mb',
+            mime_types: [
+                {title: "excel files", extensions: "xls"}
+
+            ]
+        },
+
+        init: {
+            PostInit: function () {
+                document.getElementById('filelist').innerHTML = '';
+                document.getElementById('uploadfiles').onclick = function () {
+
+                    if (uploader.files.length == 1) {
+                        uploader.start();
+                        return false;
+                    } else {
+                        document.getElementById('console').appendChild(document.createTextNode("请选择文件！\n"));
+                    }
+
+                };
+            },
+
+            FilesAdded: function (up, files) {
+
+                if (uploader.files.length > 1) {
+                    alert("只能导入一个文件,请重新选择！");
+                    uploader.splice(0, 999);
+                    document.getElementById('filelist').innerHTML = '';
+                } else {
+
+                    plupload.each(files, function (file) {
+                        document.getElementById('filelist').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
+                    });
+                }
+
+            },
+
+            UploadProgress: function (up, file) {
+                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+            },
+            UploadComplete: function (up, err) {
+                document.getElementById('console').appendChild(document.createTextNode("已完成上传！\n"));
+
+            },
+            Error: function (up, err) {
+                document.getElementById('console').appendChild(document.createTextNode("错误 #" + err.code + ": " + err.message + "\n"));
+            },
+            FileUploaded: function (up, file, result) {
+                if (result.response == "03") {
+                    document.getElementById('console').appendChild(document.createTextNode("导入异常，请检查文档内容，务必按照格式填写\n"));
+                }
+                ;
+            }
+        }
+    });
+
+    uploader.init();
+</script>
+</body>
+

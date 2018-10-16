@@ -1,0 +1,82 @@
+<div style="height: 10px;"></div>
+<div class="container">
+    <div class="loading">
+    </div>
+    <div class="scroll">
+        <div class="tabs">
+            <a href="javascript:void(0);" class="tab cur">事件单
+                <span class="tiao"></span>
+            </a>
+            <a href="javascript:void(0);" class="tab">请求单</a>
+        </div>
+        <ul id="con">
+            <li>
+                <div class="todo-container tabsTop">
+                    <div class="todo-center">
+                        <a class="todo-row" href="javascript:void(0);" id="assign">
+                            <span class="todo-pic todo-pic1"></span>
+                            <span class="todo-jt"></span>
+                            <div class="todo-lm">已分派</div>
+                            <div class="todo-desc">目前共<span id="fenpai">0</span>条记录</div>
+                        </a>
+                    </div>
+                    <div class="todo-center">
+                        <a class="todo-row" href="javascript:void(0);" id="dealing">
+                            <span class="todo-pic todo-pic2"></span>
+                            <span class="todo-jt"></span>
+                            <div class="todo-lm">处理中</div>
+                            <div class="todo-desc">目前共<span id="chuli">0</span>条记录</div>
+                        </a>
+                    </div>
+                    <div class="todo-center">
+                        <a class="todo-row" href="javascript:void(0);" id="hangup">
+                            <span class="todo-pic todo-pic3"></span>
+                            <span class="todo-jt"></span>
+                            <div class="todo-lm">挂起中</div>
+                            <div class="todo-desc">目前共<span id="guaqi">0</span>条记录</div>
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li hidden>
+                <div class="todo-container tabsTop">
+                    <div class="todo-center">
+                        <a class="todo-row" href="javascript:void(0);" id="qingqiu">
+                            <span class="todo-pic todo-pic2"></span>
+                            <span class="todo-jt"></span>
+                            <div class="todo-lm">请求列表</div>
+                            <div class="todo-desc">目前共<span id="request">0</span>条记录</div>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    .hideTabs {
+        display: none;
+    }
+
+    .tabsTop {
+        padding-top: 10px;
+    }
+
+    a:hover {
+        color: white;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $(".header").pin();
+
+        $('.tabs a').click(function () {
+            var i = $(this).index();
+            $(this).addClass('cur').siblings().removeClass('cur');
+            $('.tabs').find('span').remove();
+            $(this).append('<span class="tiao"></span>');
+            $('#con li').eq(i).show().siblings().hide();
+        });
+    });
+</script>

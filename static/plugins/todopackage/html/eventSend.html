@@ -1,0 +1,66 @@
+<div class="header"><a href="javascript:void(0);" class="back" id="back"></a>事件单转派</div>
+<div style="height: 10px;background: #F1F1F1;"></div>
+<div class="container">
+    <div class="cont1">
+        <div class="row">
+            <div class="tii sjti">基本信息</div>
+            <div class="col-sm-2 col-md-2"></div>
+        </div>
+        <div class="row">
+            <div class="ti">事件标题</div>
+            <div class="de" id="title"></div>
+        </div>
+        <div class="row">
+            <div class="ti">报告人员</div>
+            <div class="de" id="reporter"></div>
+        </div>
+        <div class="row">
+            <div class="ti">工单编号</div>
+            <div class="de" id="eventNumber"></div>
+        </div>
+    </div>
+    <div class="cont1">
+        <div class="row">
+            <div class="tii sjti">转派选择</div>
+            <div class="col-sm-2 col-md-2"></div>
+        </div>
+        <div class="row" style="height:40px;line-height:40px">
+            <div class="ti">分配组</div>
+            <div class="de">
+                <select id="group" class="form-control"></select>
+            </div>
+        </div>
+        <div class="row" style="height:40px;line-height:40px">
+            <div class="ti">分配人</div>
+            <div class="de">
+                <select id="assigner" class="form-control"> </select>
+            </div>
+        </div>
+    </div>
+    <div class="cont1" style="margin-bottom: 1.52rem">
+        <div class="row">
+            <div class="tii sjti">处理意见</div>
+            <div class="col-sm-2 col-md-2"></div>
+        </div>
+        <div class="row" style="padding-top: 5px;">
+            <div class="col-xs-12 col-sm-8 col-md-8 col-sm-offset-2 col-md-offset-2">
+                <textarea class="shuru-tre" rows="4" id="advice" placeholder="请填写处理意见"></textarea>
+            </div>
+            <div class="col-sm-offset-2 col-md-offset-2"></div>
+        </div>
+
+    </div>
+    <a href="javascript:void(0);" class="gq-btn" id="send" style="margin-bottom: 0.52rem">转派</a>
+</div>
+
+
+<script>
+    $(function () {
+        $(".header").pin();
+
+        //设置bootstrap自动适应布局,ti是字段标题，de是内容，tii是段落标题
+        $('.ti').addClass('col-xs-4 col-sm-3 col-md-2 col-sm-offset-2 col-md-offset-2');
+        $('.de').addClass('col-sm-5 col-xs-8 col-md-6');
+        $('.tii').addClass('col-xs-12 col-sm-10 col-md-8 col-sm-offset-2 col-md-offset-2')
+    });
+</script>
