@@ -10,11 +10,15 @@ See the License for the specific language governing permissions and limitations 
 """
 import json
 
+import datetime
+
+from django.contrib.auth.models import Group
 from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from common.mymako import render_mako_context,render_json
-from home_application.models import VCiDenameDeparentname
+from home_application.models import VCiDenameDeparentname, TCi
+from django.db import connection, transaction
 
 def home(request):
     """
@@ -106,6 +110,72 @@ def ciLict(request):
     #转字符串，把对象拿出来。
     json_data = serializers.serialize("json", tciList, ensure_ascii=False)#只有数据没页码
 
+    a=list(tciList)
+    #json_data = json.dumps(a, ensure_ascii=False, encoding='UTF-8')
+    #json_data = serializers.serialize("json", a, ensure_ascii=False)  # 只有数据没页码
     result = {'page':page,'size':size,'rows':json.loads(json_data)}
 
+    # result1=executeQuery("select ROWNUM RN,vci.*,vci.deviceparentname||'/'||vci.devicename parent_child_name from v_ci_dename_deparentname vci where 1=1")
+    # bb= serializers.serialize("json", result1, ensure_ascii=False)
+    #
+    # print(bb)
+
     return render_json(result)
+
+
+'''执行django原始sql语句  并返回一个数组对象'''
+def executeQuery(sql):
+        cursor = connection.cursor()  # 获得一个游标(cursor)对象
+        cursor.execute(sql)
+        rawData = cursor.fetchall()
+        col_names = [desc[0] for desc in cursor.description]
+
+        result = []
+        for row in rawData:
+            objDict = {}
+            # 把每一行的数据遍历出来放到Dict中
+            for index, value in enumerate(row):
+                print index, col_names[index], value
+                objDict[col_names[index]] = value
+
+            result.append(objDict)
+
+        return result
+
+
+
+class DateEncoder(json.JSONEncoder):
+    def default(self,obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.strftime('%Y-%m-%d %H:%M:%S')
+        elif isinstance(obj,datetime.date):
+            return obj.strftime("%Y-%m-%d")
+        else:
+            return json.JSONEncoder.default(self, obj)
+
+
+
+def ciDel(request):
+    id = request.GET.get('id')
+    TCi.objects.get(id=id).delete()
+    result ={"success":True,"message":"删除成功"}
+    return render_json(result)
+
+
+def getUserInfo(request):
+    current_user_set=""
+
+    if request.user.is_authenticated():
+        current_user_set = request.user
+        # print current_user_set
+        # current_group_set = Group.objects.get(user=current_user_set)
+        # print current_group_set
+        # print current_user_set.get_group_permissions()
+        json_data = json.dumps(current_user_set, ensure_ascii=False)
+    return  render_json(json_data)
+
+
+
+
+
+
