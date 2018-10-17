@@ -8,17 +8,15 @@ Unless required by applicable law or agreed to in writing, software distributed 
 an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 """
-import json
-
 import datetime
-
+import json
 from django.contrib.auth.models import Group
 from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db import connection, transaction
 
 from common.mymako import render_mako_context,render_json
 from home_application.models import VCiDenameDeparentname, TCi, TPlanMenu
-from django.db import connection, transaction
 
 def home(request):
     """
@@ -168,6 +166,8 @@ def ciDel(request):
 
 def getUserInfo(request):
     userInfo={}
+    menuInfo = {}
+    loginInfo = {}
 
     if request.user.is_authenticated():
         user = request.user
@@ -181,16 +181,16 @@ def getUserInfo(request):
         userInfo['email'] = user.email
         userInfo['fullname'] = 'administrator'
 
+        menu = TPlanMenu.objects.all()
+        L = []
+        for p in menu:
+            p.__dict__.pop("_state")
+            L.append(p.__dict__)
+        loginInfo['menus'] = L
         loginInfo['userInfo'] = userInfo
-        loginInfo['menus'] = []
-        menuInfo['id'] = 23
-        menuInfo['name'] = 'role'
-        menuInfo['menukey'] = 'rolemgr'
-        menuInfo['iconCls'] = 'fa fa-rocket'
-        loginInfo['menus'].append(menuInfo)
 
-    json_data = json.dumps(userInfo, ensure_ascii=False)
-    return  render_json(userInfo)
+    json_data = json.dumps(loginInfo, ensure_ascii=False)
+    return render_json(loginInfo)
 
 def menuList(request):
 
