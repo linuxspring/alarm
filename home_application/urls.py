@@ -19,5 +19,8 @@ urlpatterns = patterns(
     (r'^hello/$', 'hello'),
     (r'^ci/list$', 'ciLict'),
     (r'^user/getInfo.data', 'getUserInfo'),
-    (r'^menu/list', 'menuList'),
+    (r'^menu/view.data', 'menuList'),
+    (r'^mz_dict/view.data', 'dictList'),
+    (r'^mz_dict/save.data', 'dictSave'),
+    (r'^mz_log/getList.data', 'logList'),
 )

@@ -14,9 +14,13 @@ from django.contrib.auth.models import Group
 from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import connection, transaction
+from django.http import HttpResponse
 
+import CJsonEncoder
+import ComplexEncoder
 from common.mymako import render_mako_context,render_json
-from home_application.models import VCiDenameDeparentname, TCi, TPlanMenu
+from home_application.models import VCiDenameDeparentname, TCi, TPlanMenu, TPlanDict, TPlatOPERATORLOG
+
 
 def home(request):
     """
@@ -189,21 +193,89 @@ def getUserInfo(request):
         loginInfo['menus'] = L
         loginInfo['userInfo'] = userInfo
 
-    json_data = json.dumps(loginInfo, ensure_ascii=False)
-    return render_json(loginInfo)
+    json_data = json.dumps(loginInfo, cls=ComplexEncoder2, ensure_ascii=False)
+    return HttpResponse(json_data, content_type='application/json')
+
+
 
 def menuList(request):
+    index = request.GET.get('index')
+    size = request.GET.get('size')
+    userid = request.GET.get('userid')
+    fromdate = request.GET.get('fromdate')
+    todate = request.GET.get('todate')
+    type = request.GET.get('type')
 
     menu = TPlanMenu.objects.all()
-    json_data = serializers.serialize("json", menu, ensure_ascii=False,encoding='UTF-8')  # 只有数据没页码
-
-    result = {'success': True, 'rows': json.loads(json_data)}
+    L = []
+    for p in menu:
+        p.__dict__.pop("_state")
+        L.append(p.__dict__)
+    json_data = json.dumps(L, cls=ComplexEncoder2,
+                           ensure_ascii=False)  # serializers.serialize("json", menu, ensure_ascii=False,encoding='UTF-8')  # 只有数据没页码
+    json_data = json_data.replace("null", '""');
+    result = {'success': True, 'rows': json.loads(json_data), 'pageIndex': index, 'pageSize': size, 'pageCount': 5,
+              'total': 100}
     return render_json(result)
 
 
+def dictList(request):
+    index = request.GET.get('index')
+    size = request.GET.get('size')
+    menu = TPlanDict.objects.all()
+    userid = request.GET.get('userid')
+    fromdate = request.GET.get('fromdate')
+    todate = request.GET.get('todate')
+    type = request.GET.get('type')
+
+    L = []
+    for p in menu:
+        p.__dict__.pop("_state")
+        L.append(p.__dict__)
+    json_data = json.dumps(L, cls=ComplexEncoder2,
+                           ensure_ascii=False)  # serializers.serialize("json", menu, ensure_ascii=False,encoding='UTF-8')  # 只有数据没页码
+    json_data = json_data.replace("null", '""');
+    result = {'success': True, 'rows': json.loads(json_data), 'pageIndex': index, 'pageSize': size, 'pageCount': 5,
+              'total': 100}
+    return render_json(result)
 
 
+def dictSave(request):
+    dictStr = request.GET.get('json')
+    dict = json.loads(dictStr)
+    res = TPlanDict(dict).save()
+    result = {'success': True, 'msg': 'ok'}
+    return render_json(result)
 
 
+def logList(request):
+    index = request.GET.get('index')
+    size = request.GET.get('size')
+    userid = request.GET.get('userid')
+    fromdate = request.GET.get('beginTime')
+    todate = request.GET.get('endTime')
+    menu = TPlatOPERATORLOG.objects.all()
+
+    L = []
+    for p in menu:
+        p.__dict__.pop("_state")
+        L.append(p.__dict__)
+    json_data = json.dumps(L, cls=ComplexEncoder2, ensure_ascii=False)
+    json_data = json_data.replace("null", '""');
+    result = {'success': True, 'rows': json.loads(json_data), 'pageIndex': index, 'pageSize': size, 'pageCount': 5,
+              'total': 1000}
+    return render_json(result)
 
 
+def date_handler(obj):
+    return obj.strftime("%Y-%m-%d %H:%M:%S")  # if hasattr(obj, '%Y-%m-%d %H:%M:%S') else obj
+
+
+class ComplexEncoder2(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.strftime('%Y-%m-%d %H:%M:%S')
+        elif isinstance(obj, datetime.date):
+            return obj.strftime('%Y-%m-%d')
+        else:
+            return json.JSONEncoder.default(self, obj)

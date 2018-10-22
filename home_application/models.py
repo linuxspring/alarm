@@ -406,12 +406,49 @@ class TPlanMenu(models.Model):
     link = models.CharField(max_length=500, blank=True, null=True)
 
     menukey = models.CharField(max_length=55, blank=True, null=True)
-    createtime = models.DateField(blank=True, null=True)
-    tenantid = models.IntegerField(max_length=11, blank=True, null=True)
-    iconcls = models.CharField(max_length=55, blank=True, null=True)
-    sort_index = models.IntegerField(max_length=11, blank=True, null=True)
+    createtime = models.DateTimeField(blank=True, null=True)
+    tenantId = models.IntegerField(max_length=11, blank=False, null=True)
+    iconCls = models.CharField(max_length=55, blank=True, null=True)
+    sortIndex = models.IntegerField(max_length=11, blank=True, null=True)
 
 
     class Meta:
         managed = False
         db_table = 'PLAT_MENU'
+
+
+class TPlanDict(models.Model):
+    id = models.IntegerField(primary_key=True, editable=False, max_length=11)
+    pid = models.IntegerField(max_length=11, blank=True, null=True)
+
+    type = models.IntegerField(max_length=1, blank=True, null=True)
+
+    cnname = models.CharField(max_length=55, blank=True, null=True)
+
+    enname = models.CharField(max_length=55, blank=True, null=True)
+    dict_value = models.CharField(max_length=55, blank=True, null=True)
+    tenantId = models.IntegerField(max_length=11, blank=False, null=True)
+    autoid = models.CharField(max_length=55, blank=True, null=True)
+    sysid = models.IntegerField(max_length=11, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'PLAT_DICT'
+
+
+class TPlatOPERATORLOG(models.Model):
+    id = models.CharField(primary_key=True, editable=False, max_length=11)
+    operator_time = models.DateTimeField(blank=True, null=True)
+
+    log_content = models.CharField(max_length=800, blank=True, null=True)
+    operator = models.CharField(max_length=55, blank=True, null=True)
+    log_level = models.IntegerField(max_length=1, blank=True, null=True)
+    IP = models.CharField(max_length=55, blank=True, null=True)
+
+    class_name = models.CharField(max_length=55, blank=True, null=True)
+    method_name = models.CharField(max_length=50, blank=True, null=True)
+    oper_name = models.CharField(max_length=55, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'WECHAT_OPERATOR_LOG'

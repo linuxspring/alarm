@@ -88,7 +88,7 @@ IWF.plugins['dictmgr'] = function () {
             }
         me.flowTool.empty();
         me.pnl = me.flowGrid.Form({
-            html: 'forms/F000001/addDict.html', title: '新增字典', load: function (e) {
+            html: '/static/forms/F000001/addDict.html', title: '新增字典', load: function (e) {
                 //me.typeCmb= e.find('#type').ComboBox({ data : me.ds['costtype'], field : 'cnname', value : 'value', name : '选择消费类型' });
             }, click: function (e) {
                 if (e.data.ok) {
@@ -287,7 +287,7 @@ IWF.plugins['dictmgr'] = function () {
             {title: '编号', text: '{autoid}', width: '25%'}
             , {title: 'KEY', text: '{enname}', width: '25%'}
             , {title: '中文名', text: '{cnname}', width: '25%'}
-            , {title: '对应值', text: '{value}', width: '25%'}
+            , {title: '对应值', text: '{dict_value}', width: '25%'}
         ]
     }
 

@@ -81,7 +81,7 @@ IWF.plugins['menumgr'] = function () {
         me.flowTool.empty();
         //var This={};
         me.pnl = me.flowGrid.Form({
-            html: 'forms/F000002/addMenu.html', title: '新增菜单', load: function (e) {
+            html: '/static/forms/F000002/addMenu.html', title: '新增菜单', load: function (e) {
                 //me.typeCmb= e.find('#type').ComboBox({ data : me.ds['costtype'], field : 'cnname', value : 'value', name : '选择消费类型' });
             }, click: function (e) {
                 if (e.data.ok) {
@@ -162,7 +162,7 @@ IWF.plugins['menumgr'] = function () {
         me.flowTool.empty();
         var This = {};
         me.pnl = me.flowGrid.Form({
-            html: 'forms/F000002/addMenu.html', title: '修改菜单', load: function (e) {
+            html: '/static/forms/F000002/addMenu.html', title: '修改菜单', load: function (e) {
                 //me.typeCmb= e.find('#type').ComboBox({ data : me.ds['costtype'], field : 'cnname', value : 'value', name : '选择消费类型' });
                 e.find('#link').val(rows[0].link);
                 e.find('#menuname').val(rows[0].name);
@@ -216,7 +216,7 @@ IWF.plugins['menumgr'] = function () {
         me.flowTool.empty();
         var This = {};
         me.pnl = me.flowGrid.Form({
-            html: 'forms/F000002/addMenu.html', title: '复制并新增菜单', load: function (e) {
+            html: '/static/forms/F000002/addMenu.html', title: '复制并新增菜单', load: function (e) {
                 //me.typeCmb= e.find('#type').ComboBox({ data : me.ds['costtype'], field : 'cnname', value : 'value', name : '选择消费类型' });
                 e.find('#link').val(rows[0].link);
                 e.find('#menuname').val(rows[0].name);
@@ -269,7 +269,7 @@ IWF.plugins['menumgr'] = function () {
         me.flowTool.empty();
         var This = rows[0];
         me.pnl = me.flowGrid.Form({
-            html: 'forms/F000002/detailMenu.html', title: '菜单详细信息', load: function (el) {
+            html: '/static/forms/F000002/detailMenu.html', title: '菜单详细信息', load: function (el) {
                 var tpl = el.html();
                 el.empty();
                 $(utils.replaceTpl(tpl, This)).appendTo(el);
