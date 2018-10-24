@@ -423,7 +423,7 @@ IWF.plugins['userinfo'] = function () {
         var rows = [];
         rows[0] = me.options.userInfo;
         me.pnl = me.flowGrid.Form({
-            html: 'forms/F000001/pwdUser.html', title: '修改用户密码', load: function (e) {
+            html: '/static/forms/F000001/pwdUser.html', title: '修改用户密码', load: function (e) {
                 //me.typeCmb= e.find('#type').ComboBox({ data : me.ds['costtype'], field : 'cnname', value : 'value', name : '选择消费类型' });
                 e.find('#username').val(rows[0].username);
                 e.find('#fullname').val(rows[0].fullname);

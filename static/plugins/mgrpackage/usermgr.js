@@ -9,7 +9,7 @@ IWF.plugins['usermgr'] = function () {
         typeZone: function (type) {
 
 
-            return (type == 0) ? '[<span style="color:red;">' + iwfTool.getVDict(me.ds['user_status'], 'value', type) + '</span>]' : '[<span style="color:green;">' + iwfTool.getVDict(me.ds['user_status'], 'value', type) + '</span>]';
+            return (type == 0) ? '[<span style="color:red;">' + iwfTool.getVDict(me.ds['user_status'], 'dict_value', type) + '</span>]' : '[<span style="color:green;">' + iwfTool.getVDict(me.ds['user_status'], 'value', type) + '</span>]';
         },
         getName: function (type) {
             return iwfTool.getVDict(me.ds['sex'], 'value', type);
@@ -25,8 +25,8 @@ IWF.plugins['usermgr'] = function () {
             , {title: '用户名称', text: '{fullname}', width: '90px'}
             , {title: '性别', text: '{getName(gender)}', width: '40px'}
             , {title: '手机号码', text: '{tel}', width: '80px'}
-            , {title: '状态', text: '{typeZone(userState)}', width: '60px'}
-            , {title: 'UKEY', text: '{userKey}', width: '240px'}
+            , {title: '状态', text: '{typeZone(user_state)}', width: '60px'}
+            , {title: 'UKEY', text: '{user_key}', width: '240px'}
             , {title: '创建时间', text: '{changeDate(createtime)}', width: '130px'}
             , {title: '描述', text: '{description}', width: '120px'}
         ],

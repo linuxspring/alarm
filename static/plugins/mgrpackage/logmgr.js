@@ -20,10 +20,10 @@ IWF.plugins['logmgr'] = function () {
             {title: '<input type="checkbox" />', text: '<input type="checkbox" />', width: '30px', click: true}
             , {title: '编号', text: '{id}', width: '10%'}
             , {title: '用户名', text: '{operator}', width: '10%'}
-            , {title: '日志级别', text: '{logLevel}', width: '10%'}
+            , {title: '日志级别', text: '{log_level}', width: '10%'}
             , {title: 'IP', text: '{ip}', width: '10%'}
-            , {title: '操作时间', text: '{operatorTime}', width: '15%'}
-            , {title: '日志描述', text: '{logContent}', width: '50%'}
+            , {title: '操作时间', text: '{operator_time}', width: '15%'}
+            , {title: '日志描述', text: '{log_content}', width: '50%'}
 
         ],
         linkclick: function (sender, data) {

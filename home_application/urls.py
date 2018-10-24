@@ -22,5 +22,11 @@ urlpatterns = patterns(
     (r'^menu/view.data', 'menuList'),
     (r'^mz_dict/view.data', 'dictList'),
     (r'^mz_dict/save.data', 'dictSave'),
+    (r'^mz_dict/del.data', 'dictDel'),
     (r'^mz_log/getList.data', 'logList'),
+
+    (r'^dept/view.data', 'deptList'),
+    (r'^user/view.data', 'userList'),
+    (r'^user/detail.data', 'userDetail'),
+    (r'^role/view.data', 'roleList'),
 )

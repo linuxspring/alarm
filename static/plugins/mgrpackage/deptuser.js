@@ -9,7 +9,7 @@ IWF.plugins['deptuser'] = function () {
         data: {
             key: {
                 title: "name",
-                name: 'deptName'
+                name: 'dept_name'
             },
             simpleData: {
                 enable: true,

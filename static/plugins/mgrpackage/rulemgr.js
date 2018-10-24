@@ -38,7 +38,7 @@ IWF.plugins['rulemgr'] = function () {
         columns: [
             {title: '<input type="checkbox" />', text: '<input type="checkbox" />', width: '30px', click: true}
             , {title: '编号', text: '{id}', width: '60px'}
-            , {title: '角色名称', text: '<a href="javascript:void(0)">{roleName}</a>', width: '120px'}
+            , {title: '角色名称', text: '<a href="javascript:void(0)">{rolename}</a>', width: '120px'}
             , {title: '标题', text: '{title}', width: '60px'}
             , {title: '是否管理员', text: '{typeZone(admin)}', width: '80px'}
             , {title: '是否根用户', text: '{typeZone(root)}', width: '80px'}

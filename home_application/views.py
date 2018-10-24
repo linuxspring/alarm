@@ -14,12 +14,14 @@ from django.contrib.auth.models import Group
 from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import connection, transaction
+from django.db.models import Min, Avg, Max, Sum
 from django.http import HttpResponse
 
 import CJsonEncoder
 import ComplexEncoder
 from common.mymako import render_mako_context,render_json
-from home_application.models import VCiDenameDeparentname, TCi, TPlanMenu, TPlanDict, TPlatOPERATORLOG
+from home_application.models import VCiDenameDeparentname, TCi, TPlanMenu, TPlanDict, TPlatOPERATORLOG, PlatDept, \
+    PlatUser, PlatRole
 
 
 def home(request):
@@ -185,18 +187,41 @@ def getUserInfo(request):
         userInfo['email'] = user.email
         userInfo['fullname'] = 'administrator'
 
+        user = PlatUser.objects.filter(username='admin')
+        user = user[0]
+        user.__dict__.pop("_state")
+        ujs = json.dumps(user.__dict__, cls=ComplexEncoder2, ensure_ascii=False)
+
         menu = TPlanMenu.objects.all()
         L = []
         for p in menu:
             p.__dict__.pop("_state")
             L.append(p.__dict__)
+
+        dict = TPlanDict.objects.all()
+        list = []
+        for p in dict:
+            p.__dict__.pop("_state")
+            list.append(p.__dict__)
+
         loginInfo['menus'] = L
-        loginInfo['userInfo'] = userInfo
+        loginInfo['dict'] = list
+        loginInfo['userInfo'] = user.__dict__
 
     json_data = json.dumps(loginInfo, cls=ComplexEncoder2, ensure_ascii=False)
     return HttpResponse(json_data, content_type='application/json')
 
 
+def userDetail(request):
+    id = request.GET.get('id')
+    user = PlatUser.objects.filter(id=id)
+    user = user[0]
+    user.__dict__.pop("_state")
+    userinfo = {}
+    userinfo['obj'] = user.__dict__
+    json_data = json.dumps(userinfo, cls=ComplexEncoder2, ensure_ascii=False)
+    json_data = json_data.replace("null", '""');
+    return HttpResponse(json_data, content_type='application/json')
 
 def menuList(request):
     index = request.GET.get('index')
@@ -243,10 +268,29 @@ def dictList(request):
 def dictSave(request):
     dictStr = request.GET.get('json')
     dict = json.loads(dictStr)
-    res = TPlanDict(dict).save()
-    result = {'success': True, 'msg': 'ok'}
+    if hasattr(dict, 'pid'):
+        dict.pid = -1
+    else:
+        dict['pid'] = -1
+    maxid = TPlanDict.objects.aggregate(Max('id'))
+    maxid = maxid['id__max']
+    autoid = 'D{0:0>6}'.format(7)
+    res = TPlanDict(id=maxid + 1, pid=dict['pid'], cnname=dict['cnname'], enname=dict['enname'],
+                    dict_value=dict['value'], sysid=dict['sysid'], type=0, autoid=autoid).save()
+    if res:
+        result = {'success': True, 'msg': 'ok'}
+    else:
+        result = {'success': True, 'msg': 'ok'}
     return render_json(result)
 
+
+def dictDel(request):
+    ids = request.GET.get('ids')
+    ids = ids.split(',')
+    for id in ids:
+        TPlanDict.objects.get(id=id).delete()
+    result = {"success": True, "message": "删除成功"}
+    return render_json(result)
 
 def logList(request):
     index = request.GET.get('index')
@@ -265,6 +309,70 @@ def logList(request):
     result = {'success': True, 'rows': json.loads(json_data), 'pageIndex': index, 'pageSize': size, 'pageCount': 5,
               'total': 1000}
     return render_json(result)
+
+
+def userList(request):
+    index = request.GET.get('index')
+    size = request.GET.get('size')
+    userid = request.GET.get('userid')
+    fromdate = request.GET.get('fromdate')
+    todate = request.GET.get('todate')
+    type = request.GET.get('type')
+    menu = PlatUser.objects.all()
+
+    L = []
+    for p in menu:
+        p.__dict__.pop("_state")
+        L.append(p.__dict__)
+    json_data = json.dumps(L, cls=ComplexEncoder2,
+                           ensure_ascii=False)  # serializers.serialize("json", menu, ensure_ascii=False,encoding='UTF-8')  # 只有数据没页码
+    json_data = json_data.replace("null", '""');
+    result = {'success': True, 'rows': json.loads(json_data), 'pageIndex': index, 'pageSize': size, 'pageCount': 5,
+              'total': 100}
+    return render_json(result)
+
+
+def roleList(request):
+    index = request.GET.get('index')
+    size = request.GET.get('size')
+    userid = request.GET.get('userid')
+    fromdate = request.GET.get('fromdate')
+    todate = request.GET.get('todate')
+    type = request.GET.get('type')
+    menu = PlatRole.objects.all()
+
+    L = []
+    for p in menu:
+        p.__dict__.pop("_state")
+        L.append(p.__dict__)
+    json_data = json.dumps(L, cls=ComplexEncoder2,
+                           ensure_ascii=False)  # serializers.serialize("json", menu, ensure_ascii=False,encoding='UTF-8')  # 只有数据没页码
+    json_data = json_data.replace("null", '""');
+    result = {'success': True, 'rows': json.loads(json_data), 'pageIndex': index, 'pageSize': size, 'pageCount': 5,
+              'total': 100}
+    return render_json(result)
+
+
+def deptList(request):
+    index = request.GET.get('index')
+    size = request.GET.get('size')
+    userid = request.GET.get('userid')
+    fromdate = request.GET.get('fromdate')
+    todate = request.GET.get('todate')
+    type = request.GET.get('type')
+    menu = PlatDept.objects.all()
+
+    L = []
+    for p in menu:
+        p.__dict__.pop("_state")
+        L.append(p.__dict__)
+    json_data = json.dumps(L, cls=ComplexEncoder2,
+                           ensure_ascii=False)  # serializers.serialize("json", menu, ensure_ascii=False,encoding='UTF-8')  # 只有数据没页码
+    json_data = json_data.replace("null", '""');
+    result = {'success': True, 'rows': json.loads(json_data), 'pageIndex': index, 'pageSize': size, 'pageCount': 5,
+              'total': 100}
+    return render_json(result)
+
 
 
 def date_handler(obj):

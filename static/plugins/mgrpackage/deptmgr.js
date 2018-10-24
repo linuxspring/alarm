@@ -315,7 +315,7 @@ IWF.plugins['deptmgr'] = function () {
         },
         columns: [
             {title: '编号', text: '{autoid}', width: '30%'}
-            , {title: '部门', text: '{deptName}', width: '15%'}
+            , {title: '部门', text: '{dept_name}', width: '15%'}
             , {title: '电话', text: '{tel}', width: '10%'}
             , {title: '类型', text: '{typeZone(dept_type)}', width: '10%'}
             , {title: '创建时间', text: '{changeDate(createtime)}', width: '15%'}

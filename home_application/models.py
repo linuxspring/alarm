@@ -443,7 +443,7 @@ class TPlatOPERATORLOG(models.Model):
     log_content = models.CharField(max_length=800, blank=True, null=True)
     operator = models.CharField(max_length=55, blank=True, null=True)
     log_level = models.IntegerField(max_length=1, blank=True, null=True)
-    IP = models.CharField(max_length=55, blank=True, null=True)
+    ip = models.CharField(max_length=55, blank=True, null=True)
 
     class_name = models.CharField(max_length=55, blank=True, null=True)
     method_name = models.CharField(max_length=50, blank=True, null=True)
@@ -452,3 +452,91 @@ class TPlatOPERATORLOG(models.Model):
     class Meta:
         managed = False
         db_table = 'WECHAT_OPERATOR_LOG'
+
+
+class PlatUser(models.Model):
+    id = models.BigIntegerField(primary_key=True, editable=False, max_length=11)
+    username = models.CharField(max_length=150)
+    description = models.CharField(max_length=300, blank=True, null=True)
+    tel = models.CharField(max_length=60, blank=True, null=True)
+    password = models.CharField(max_length=60, blank=True, null=True)
+    fullname = models.CharField(max_length=60, blank=True, null=True)
+    address = models.CharField(max_length=60, blank=True, null=True)
+    postcode = models.CharField(max_length=60, blank=True, null=True)
+    email = models.CharField(max_length=60, blank=True, null=True)
+    user_state = models.IntegerField(max_length=1, blank=True, null=True)
+    user_key = models.CharField(max_length=60, blank=True, null=True)
+    gender = models.BigIntegerField()
+    isdeleted = models.IntegerField(max_length=1, blank=True, null=True)
+    comfirm_method = models.IntegerField(max_length=1, blank=True, null=True)
+    idcard_no = models.CharField(max_length=60, blank=True, null=True)
+    reg_time = models.DateTimeField(blank=True, null=True)
+    office_tel = models.CharField(max_length=60, blank=True, null=True)
+    block_up_time = models.DateTimeField(blank=True, null=True)
+    is_start_up = models.IntegerField(max_length=1, blank=True, null=True)
+    loginnum = models.BigIntegerField()
+    createtime = models.DateTimeField(blank=True, null=True)
+    ulevel = models.IntegerField(max_length=1, blank=True, null=True)
+    type = models.IntegerField(max_length=1, blank=True, null=True)
+    tel2 = models.CharField(max_length=60, blank=True, null=True)
+    sign = models.CharField(max_length=60, blank=True, null=True)
+    lastupdate = models.DateTimeField(blank=True, null=True)
+    cnname = models.CharField(max_length=60, blank=True, null=True)
+    qq = models.CharField(max_length=60, blank=True, null=True)
+    position = models.CharField(max_length=60, blank=True, null=True)
+    link = models.CharField(max_length=60, blank=True, null=True)
+    age = models.BigIntegerField()
+    autoid = models.CharField(max_length=60, blank=True, null=True)
+    comid = models.BigIntegerField()
+    wx = models.CharField(max_length=60, blank=True, null=True)
+    tenantId = models.IntegerField(max_length=11, blank=False, null=True)
+    version = models.IntegerField(max_length=11, blank=False, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'PLAT_USER'
+
+
+class PlatDept(models.Model):
+    dept_id = models.BigIntegerField(primary_key=True, editable=False, max_length=11)
+    dept_name = models.CharField(max_length=150)
+    description = models.CharField(max_length=300, blank=True, null=True)
+    tel = models.CharField(max_length=60, blank=True, null=True)
+    manager = models.CharField(max_length=60, blank=True, null=True)
+    dept_type = models.IntegerField(max_length=1, blank=True, null=True)
+    pid = models.BigIntegerField()
+    isdeleted = models.IntegerField(max_length=1, blank=True, null=True)
+    createtime = models.DateTimeField(blank=True, null=True)
+    tenantId = models.IntegerField(max_length=11, blank=False, null=True)
+    version = models.IntegerField(max_length=11, blank=False, null=True)
+    autoid = models.CharField(max_length=55, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'PLAT_DEPT'
+
+
+class PlatRole(models.Model):
+    id = models.BigIntegerField(primary_key=True, editable=False, max_length=11)
+    rolename = models.CharField(max_length=165, blank=True, null=True)
+    title = models.CharField(max_length=165, blank=True, null=True)
+    description = models.CharField(max_length=765, blank=True, null=True)
+    tenantid = models.IntegerField(blank=True, null=True)
+    version = models.IntegerField(blank=True, null=True)
+    isroot = models.NullBooleanField()
+    isadmin = models.NullBooleanField()
+    autoid = models.CharField(max_length=165, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'plat_role'
+
+
+class PlatDeptType(models.Model):
+    dept_type = models.IntegerField()
+    dept_typename = models.CharField(max_length=60, blank=True, null=True)
+    isdeleted = models.IntegerField(max_length=1, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'PLAT_DEPT_TYPE'

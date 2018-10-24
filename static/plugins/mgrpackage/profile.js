@@ -348,8 +348,8 @@ IWF.plugins['profile'] = function () {
             var This = {};
             me.options.userInfo = json.obj;
             $.extend(This, me.options.userInfo);
-            This.gender = iwfTool.getVDict(me.ds['sex'], 'value', This.gender);
-            me.pnl = me.flowGrid.load('forms/F000001/profile.html', function (e) {
+            This.gender = iwfTool.getVDict(me.ds['sex'], 'dict_value', This.gender);
+            me.pnl = me.flowGrid.load('/static/forms/F000001/profile.html', function (e) {
                 me.flowGrid.empty();
                 $(utils.replaceTpl(e, This)).appendTo(me.flowGrid);
                 $(this).find('#editProfile').on('click', This, function (e) {
